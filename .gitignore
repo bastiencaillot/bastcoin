@@ -1,14 +1,17 @@
+Cargo.lock
+target
+
 *.tar.gz
 
 *.exe
-src/bitcoin
-src/bitcoind
-src/bitcoin-cli
-src/bitcoin-tx
-src/bitcoin-wallet
-src/test/test_bitcoin
-src/test/test_bitcoin_fuzzy
-src/qt/test/test_bitcoin-qt
+src/bastcoin
+src/bastcoind
+src/bastcoin-cli
+src/bastcoin-tx
+src/bastcoin-wallet
+src/test/test_bastcoin
+src/test/test_bastcoin_fuzzy
+src/qt/test/test_bastcoin-qt
 
 # autoreconf
 Makefile.in
@@ -82,8 +85,8 @@ src/qt/bitcoin-qt.includes
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-bitcoin-qt
-Bitcoin-Qt.app
+bastcoin-qt
+Bastcoin-Qt.app
 background.tiff*
 
 # Unit-tests
@@ -101,7 +104,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_bitcoin.coverage/
+test_bastcoin.coverage/
 total.coverage/
 coverage_percent.txt
 
