@@ -1,3 +1,5 @@
+## For the moment, Bitcoin Core is displayed.
+
 2.132.100.47:8333
 5.1.97.4:8333
 5.39.174.116:8333
