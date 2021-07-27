@@ -67,28 +67,28 @@ templates = [
 # templates for valid bech32 sequences
 bech32_templates = [
   # hrp, version, witprog_size, metadata, output_prefix
-  ('bc',    0, 20, (False, 'main',    None, True), p2wpkh_prefix),
-  ('bc',    0, 32, (False, 'main',    None, True), p2wsh_prefix),
-  ('bc',    1,  2, (False, 'main',    None, True), (OP_1, 2)),
-  ('tb',    0, 20, (False, 'test',    None, True), p2wpkh_prefix),
-  ('tb',    0, 32, (False, 'test',    None, True), p2wsh_prefix),
-  ('tb',    2, 16, (False, 'test',    None, True), (OP_2, 16)),
-  ('bcrt',  0, 20, (False, 'regtest', None, True), p2wpkh_prefix),
-  ('bcrt',  0, 32, (False, 'regtest', None, True), p2wsh_prefix),
-  ('bcrt', 16, 40, (False, 'regtest', None, True), (OP_16, 40))
+  ('bas',    0, 20, (False, 'main',    None, True), p2wpkh_prefix),
+  ('bas',    0, 32, (False, 'main',    None, True), p2wsh_prefix),
+  ('bas',    1,  2, (False, 'main',    None, True), (OP_1, 2)),
+  ('tbas',    0, 20, (False, 'test',    None, True), p2wpkh_prefix),
+  ('tbas',    0, 32, (False, 'test',    None, True), p2wsh_prefix),
+  ('tbas',    2, 16, (False, 'test',    None, True), (OP_2, 16)),
+  ('rbas',  0, 20, (False, 'regtest', None, True), p2wpkh_prefix),
+  ('rbas',  0, 32, (False, 'regtest', None, True), p2wsh_prefix),
+  ('rbas', 16, 40, (False, 'regtest', None, True), (OP_16, 40))
 ]
 # templates for invalid bech32 sequences
 bech32_ng_templates = [
   # hrp, version, witprog_size, invalid_bech32, invalid_checksum, invalid_char
   ('tc',    0, 20, False, False, False),
-  ('tb',   17, 32, False, False, False),
-  ('bcrt',  3,  1, False, False, False),
-  ('bc',   15, 41, False, False, False),
-  ('tb',    0, 16, False, False, False),
-  ('bcrt',  0, 32, True,  False, False),
-  ('bc',    0, 16, True,  False, False),
-  ('tb',    0, 32, False, True,  False),
-  ('bcrt',  0, 20, False, False, True)
+  ('tbas',   17, 32, False, False, False),
+  ('rbas',  3,  1, False, False, False),
+  ('bas',   15, 41, False, False, False),
+  ('tbas',    0, 16, False, False, False),
+  ('rbas',  0, 32, True,  False, False),
+  ('bas',    0, 16, True,  False, False),
+  ('tbas',    0, 32, False, True,  False),
+  ('rbas',  0, 20, False, False, True)
 ]
 
 def is_valid(v):
@@ -108,7 +108,7 @@ def is_valid(v):
 
 def is_valid_bech32(v):
     '''Check vector v for bech32 validity'''
-    for hrp in ['bc', 'tb', 'bcrt']:
+    for hrp in ['bas', 'tbas', 'rbas']:
         if decode(hrp, v) != (None, None):
             return True
     return False
