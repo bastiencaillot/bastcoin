@@ -1,3 +1,5 @@
+# The original Blake3 README is located at the following URL: https://github.com/BLAKE3-team/BLAKE3/blob/master/README.md
+
 # <a href="#"><img src="media_blake3/BLAKE3.svg" alt="BLAKE3" height=50></a>
 
 BLAKE3 is a cryptographic hash function that is:
