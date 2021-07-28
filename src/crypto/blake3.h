@@ -1,5 +1,5 @@
-#ifndef BLAKE3_H
-#define BLAKE3_H
+#ifndef BITCOIN_CRYPTO_BLAKE3_H
+#define BITCOIN_CRYPTO_BLAKE3_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -56,4 +56,4 @@ void blake3_hasher_finalize_seek(const blake3_hasher *self, uint64_t seek,
 }
 #endif
 
-#endif /* BLAKE3_H */
+#endif /* BITCOIN_CRYPTO_BLAKE3_H */
