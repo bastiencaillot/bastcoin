@@ -1,7 +1,7 @@
 Description
 ------------
 
-This directory contains data-driven tests for various aspects of Bastcoin (based on bitcoin)
+This directory contains data-driven tests for various aspects of Bastcoin (based on bitcoin).
 
 License
 --------
