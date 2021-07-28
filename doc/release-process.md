@@ -1,4 +1,6 @@
-Release Process
+# As the bastcoin is based on the bitcoin source code, Bitcoin Core is also displayed
+
+Release Process (Bitcoin Core)
 ====================
 
 Before every release candidate:
