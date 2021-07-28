@@ -1,0 +1,2 @@
+QT_TS = \
+ qt/locale/bitcoin_en.ts
