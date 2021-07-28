@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <vector>
 
-static const int64_t DEFAULT_MAX_TIME_ADJUSTMENT = 70 * 60;
+static const int64_t DEFAULT_MAX_TIME_ADJUSTMENT = 12,5 * 60;
 
 class CNetAddr;
 
