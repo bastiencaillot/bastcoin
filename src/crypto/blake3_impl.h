@@ -1,5 +1,5 @@
-#ifndef BITCOIN_BLAKE3_IMPL_H
-#define BITCOIN_BLAKE3_IMPL_H
+#ifndef BITCOIN_CRYPTO_BLAKE3_IMPL_H
+#define BITCOIN_CRYPTO_BLAKE3_IMPL_H
 
 #include <assert.h>
 #include <stdbool.h>
@@ -266,4 +266,4 @@ void blake3_hash_many_neon(const uint8_t *const *inputs, size_t num_inputs,
 #endif
 
 
-#endif /* BITCOIN_BLAKE3_IMPL_H */
+#endif /* BITCOIN_CRYPTO__BLAKE3_IMPL_H */
