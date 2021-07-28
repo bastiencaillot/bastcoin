@@ -168,7 +168,7 @@ assert!(email_key != api_key);
 
 ### The C implementation
 
-See [`src/crypto/README.md`](c/README.md).
+See [`src/crypto/README.md`](src/crypto/README.md).
 
 ### Other implementations
 
