@@ -27,6 +27,8 @@ import socket
 import struct
 import time
 
+from blake3 import blake3
+
 from test_framework.siphash import siphash256
 from test_framework.util import hex_str_to_bytes, bytes_to_hex_str, assert_equal
 
@@ -522,8 +524,11 @@ class CTransaction:
 
 
 class CBlockHeader:
+    
+    hasher = blake3()
+    
     __slots__ = ("hash", "hashMerkleRoot", "hashPrevBlock", "nBits", "nNonce",
-                 "nTime", "nVersion", "sha256")
+                 "nTime", "nVersion", "sha256", "blake3")
 
     def __init__(self, header=None):
         if header is None:
@@ -537,6 +542,7 @@ class CBlockHeader:
             self.nNonce = header.nNonce
             self.sha256 = header.sha256
             self.hash = header.hash
+            self.blake3 = header.blake3
             self.calc_sha256()
 
     def set_null(self):
@@ -548,6 +554,7 @@ class CBlockHeader:
         self.nNonce = 0
         self.sha256 = None
         self.hash = None
+        self.blake3 = None
 
     def deserialize(self, f):
         self.nVersion = struct.unpack("<i", f.read(4))[0]
@@ -558,6 +565,7 @@ class CBlockHeader:
         self.nNonce = struct.unpack("<I", f.read(4))[0]
         self.sha256 = None
         self.hash = None
+        self.blake3 = None
 
     def serialize(self):
         r = b""
@@ -580,6 +588,7 @@ class CBlockHeader:
             r += struct.pack("<I", self.nNonce)
             self.sha256 = uint256_from_str(hash256(r))
             self.hash = encode(hash256(r)[::-1], 'hex_codec').decode('ascii')
+            self.blake3 = hasher.digest
 
     def rehash(self):
         self.sha256 = None
@@ -646,7 +655,7 @@ class CBlock(CBlockHeader):
     def is_valid(self):
         self.calc_sha256()
         target = uint256_from_compact(self.nBits)
-        if self.sha256 > target:
+        if self.blake3 > target:
             return False
         for tx in self.vtx:
             if not tx.is_valid():
@@ -658,7 +667,7 @@ class CBlock(CBlockHeader):
     def solve(self):
         self.rehash()
         target = uint256_from_compact(self.nBits)
-        while self.sha256 > target:
+        while self.blake3 > target:
             self.nNonce += 1
             self.rehash()
 
