@@ -1,11 +1,11 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Bitcoin
+Upstream-Name: Bastcoin
 Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
  irc://#bitcoin@freenode.net
-Source: https://github.com/bitcoin/bitcoin
+Source: https://github.com/bastiencaillot/bastcoin
 
 Files: *
-Copyright: 2009-2021, Bitcoin Core Developers
+Copyright: 2009-2021, Bitcoin Core Developers / 2011-2021 The Litecoin Core Developers / 2021 The Bastcoin Core Developers / 2020-2021 Blake3-team
 License: Expat
 Comment: The Bitcoin Core Developers encompasses the current developers listed on bitcoin.org,
          as well as the numerous contributors to the project.
@@ -86,9 +86,9 @@ License: Expat
 Comment: Modifications of Stephan Hutchings Typicons
 
 Files: src/qt/res/icons/about.png
-       src/qt/res/icons/bitcoin.*
-       share/pixmaps/bitcoin*
-       src/qt/res/src/bitcoin.svg
+       src/qt/res/icons/bastcoin.*
+       share/pixmaps/bastcoin*
+       src/qt/res/src/bastcoin.svg
 Copyright: Bitboy, Jonas Schnelli
 License: public-domain
 Comment: Site: https://bitcointalk.org/?topic=1756.0
