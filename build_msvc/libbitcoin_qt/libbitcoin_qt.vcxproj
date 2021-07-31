@@ -424,10 +424,10 @@
     </CustomBuild>
     <None Include="..\..\src\qt\macdockiconhandler.mm" />
     <None Include="..\..\src\qt\macnotificationhandler.mm" />
-    <None Include="..\..\src\qtes\icons\bitcoin.icns">
+    <None Include="..\..\src\qtes\icons\bastcoin.icns">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\..\src\qtes\src\bitcoin.svg">
+    <None Include="..\..\src\qtes\src\bastcoin.svg">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="..\..\src\qtes\src\clock_0.svg">
