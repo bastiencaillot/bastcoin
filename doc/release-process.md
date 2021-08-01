@@ -605,76 +605,16 @@ rm SHA256SUMS
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the bitcoin.org server
-  into `/var/www/bin/bitcoin-core-${VERSION}`
+Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the bastcoin.org server.
 
-- A `.torrent` will appear in the directory after a few minutes. Optionally help seed this torrent. To get the `magnet:` URI use:
-```bash
-transmission-show -m <torrent file>
 ```
-Insert the magnet URI into the announcement sent to mailing lists. This permits
-people without access to `bitcoin.org` to download the binary distribution.
-Also put it into the `optional_magnetlink:` slot in the YAML file for
-bitcoin.org (see below for bitcoin.org update instructions).
-
-- Update bitcoin.org version
-
-  - First, check to see if the Bitcoin.org maintainers have prepared a
-    release: https://github.com/bitcoin-dot-org/bitcoin.org/labels/Core
-
-      - If they have, it will have previously failed their Travis CI
-        checks because the final release files weren't uploaded.
-        Trigger a Travis CI rebuild---if it passes, merge.
-
-  - If they have not prepared a release, follow the Bitcoin.org release
-    instructions: https://github.com/bitcoin-dot-org/bitcoin.org/blob/master/docs/adding-events-release-notes-and-alerts.md#release-notes
-
-  - After the pull request is merged, the website will automatically show the newest version within 15 minutes, as well
-    as update the OS download links. Ping @saivann/@harding (saivann/harding on Freenode) in case anything goes wrong
-
+- Update bastcoin.org version
 - Update other repositories and websites for new version
-
-  - bitcoincore.org blog post
-
-  - bitcoincore.org RPC documentation update
-
-  - Update packaging repo
-
-      - Notify BlueMatt so that he can start building [the PPAs](https://launchpad.net/~bitcoin/+archive/ubuntu/bitcoin)
-
-      - Create a new branch for the major release "0.xx" (used to build the snap package)
-
-      - Notify MarcoFalke so that he can start building the snap package
-
-        - https://code.launchpad.net/~bitcoin-core/bitcoin-core-snap/+git/packaging (Click "Import Now" to fetch the branch)
-        - https://code.launchpad.net/~bitcoin-core/bitcoin-core-snap/+git/packaging/+ref/0.xx (Click "Create snap package")
-        - Name it "bitcoin-core-snap-0.xx"
-        - Leave owner and series as-is
-        - Select architectures that are compiled via gitian
-        - Leave "automatically build when branch changes" unticked
-        - Tick "automatically upload to store"
-        - Put "bitcoin-core" in the registered store package name field
-        - Tick the "edge" box
-        - Put "0.xx" in the track field
-        - Click "create snap package"
-        - Click "Request builds" for every new release on this branch (after updating the snapcraft.yml in the branch to reflect the latest gitian results)
-        - Promote release on https://snapcraft.io/bitcoin-core/releases if it passes sanity checks
-
-  - This repo
-
-      - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
-
-      - Create a [new GitHub release](https://github.com/bitcoin/bitcoin/releases/new) with a link to the archived release notes.
-
 - Announce the release:
-
-  - bitcoin-dev and bitcoin-core-dev mailing list
-
-  - Bitcoin Core announcements list https://bitcoincore.org/en/list/announcements/join/
-
-  - Update title of #bitcoin on Freenode IRC
-
-  - Optionally twitter, reddit /r/Bitcoin, ... but this will usually sort out itself
-
+  - bastcoin-dev mailing list
+  - bastcoin.org blog post
+  - Update title of #bastcoin and #bastcoin-dev on Freenode IRC (will be available soon)
+  - Optionally twitter, reddit /r/Bastcoin, ... but this will usually sort out itself
+  - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
+  - Create a [new GitHub release](https://github.com/bastiencaillot/bastcoin/releases/new) with a link to the archived release notes.
   - Celebrate
-
