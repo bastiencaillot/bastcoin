@@ -17,10 +17,10 @@ BOOST_FIXTURE_TEST_SUITE(pow_tests, BasicTestingSetup)
 BOOST_AUTO_TEST_CASE(get_next_work)
 {
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
-    int64_t nLastRetargetTime = 1261130161; // Block #30240
+    int64_t nLastRetargetTime = 1629755099; // Block #30240
     CBlockIndex pindexLast;
     pindexLast.nHeight = 32255;
-    pindexLast.nTime = 1262152739;  // Block #32255
+    pindexLast.nTime = 1629875999;  // Block #32255
     pindexLast.nBits = 0x1d00ffff;
     BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d00d86aU);
 }
@@ -29,10 +29,10 @@ BOOST_AUTO_TEST_CASE(get_next_work)
 BOOST_AUTO_TEST_CASE(get_next_work_pow_limit)
 {
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
-    int64_t nLastRetargetTime = 1231006505; // Block #0
+    int64_t nLastRetargetTime = 1627940699; // Block #0
     CBlockIndex pindexLast;
     pindexLast.nHeight = 2015;
-    pindexLast.nTime = 1233061996;  // Block #2015
+    pindexLast.nTime = 1628061599;  // Block #2015
     pindexLast.nBits = 0x1d00ffff;
     BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d00ffffU);
 }
@@ -41,10 +41,10 @@ BOOST_AUTO_TEST_CASE(get_next_work_pow_limit)
 BOOST_AUTO_TEST_CASE(get_next_work_lower_limit_actual)
 {
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
-    int64_t nLastRetargetTime = 1279008237; // Block #66528
+    int64_t nLastRetargetTime = 1631932379; // Block #66528
     CBlockIndex pindexLast;
     pindexLast.nHeight = 68543;
-    pindexLast.nTime = 1279297671;  // Block #68543
+    pindexLast.nTime = 1632053279;  // Block #68543
     pindexLast.nBits = 0x1c05a3f4;
     BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1c0168fdU);
 }
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual)
     int64_t nLastRetargetTime = 1263163443; // NOTE: Not an actual block time
     CBlockIndex pindexLast;
     pindexLast.nHeight = 46367;
-    pindexLast.nTime = 1269211443;  // Block #46367
+    pindexLast.nTime = 1630722719;  // Block #46367
     pindexLast.nBits = 0x1c387f6f;
     BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d00e1fdU);
 }
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(GetBlockProofEquivalentTime_test)
     for (int i = 0; i < 10000; i++) {
         blocks[i].pprev = i ? &blocks[i - 1] : nullptr;
         blocks[i].nHeight = i;
-        blocks[i].nTime = 1269211443 + i * chainParams->GetConsensus().nPowTargetSpacing;
+        blocks[i].nTime = 1630722719 + i * chainParams->GetConsensus().nPowTargetSpacing;
         blocks[i].nBits = 0x207fffff; /* target 0x7fffff000... */
         blocks[i].nChainWork = i ? blocks[i - 1].nChainWork + GetBlockProof(blocks[i - 1]) : arith_uint256(0);
     }
