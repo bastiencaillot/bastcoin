@@ -351,7 +351,32 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/sha512.cpp \
   crypto/sha512.h \
   crypto/siphash.cpp \
-  crypto/siphash.h
+  crypto/siphash.h \
+  crypto/.gitignore \
+  crypto/Makefile.testing \
+  crypto/blake3.c \
+  crypto/blake3.h \
+  crypto/blake3_avx2.c \
+  crypto/blake3_avx2_x86-64_unix.S \
+  crypto/blake3_avx2_x86-64_windows_gnu.S \
+  crypto/blake3_avx2_x86-64_windows_msvc.asm \
+  crypto/blake3_avx512.c \
+  crypto/blake3_avx512_x86-64_unix.S \
+  crypto/blake3_avx512_x86-64_windows_gnu.S \
+  crypto/blake3_avx512_x86-64_windows_msvc.asm \
+  crypto/blake3_dispatch.c \
+  crypto/blake3_impl.h \
+  crypto/blake3_neon.c \
+  crypto/blake3_portable.c \
+  crypto/blake3_sse2.c \
+  crypto/blake3_sse2_x86-64_unix.S \
+  crypto/blake3_sse2_x86-64_windows_gnu.S \
+  crypto/blake3_sse2_x86-64_windows_msvc.asm \
+  crypto/blake3_sse41.c \
+  crypto/blake3_sse41_x86-64_unix.S \
+  crypto/blake3_sse41_x86-64_windows_gnu.S \
+  crypto/blake3_sse41_x86-64_windows_msvc.asm \
+  crypto/test.py
 
 if USE_ASM
 crypto_libbitcoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
