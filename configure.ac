@@ -1406,9 +1406,9 @@ fi
 AC_MSG_CHECKING([whether to enable neon instructions])
 if test x$use_neon != xno; then
   AC_MSG_RESULT(yes)
-  AC_DEFINE([USE_NEON],[1],[Define if neon support should be compiled in])
+  AC_DEFINE([BLAKE3_USE_NEON],[1],[Define if neon support should be compiled in])
   use_neon=yes
-  CPPFLAGS="$CPPFLAGS -DUSE_NEON=1"
+  CPPFLAGS="$CPPFLAGS -DBLAKE3_USE_NEON=1"
 else
   AC_MSG_RESULT(no)
 fi
