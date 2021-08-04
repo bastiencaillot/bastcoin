@@ -6,6 +6,14 @@ gcc -shared -O3 -o libblake3.so crypto/blake3.c crypto/blake3_dispatch.c crypto/
     crypto/blake3_sse2_x86-64_unix.S crypto/blake3_sse41_x86-64_unix.S crypto/blake3_avx2_x86-64_unix.S \
     crypto/blake3_avx512_x86-64_unix.S
     
+gcc -shared -O3 -o libblake3.so crypto/blake3.c crypto/blake3_dispatch.c crypto/blake3_portable.c \
+    crypto/blake3_sse2_x86-64_windows_gnu.S crypto/blake3_sse41_x86-64_windows_gnu.S crypto/blake3_avx2_x86-64_windows_gnu.S \
+    crypto/blake3_avx512_x86-64_windows_gnu.S
+    
+gcc -shared -O3 -o libblake3.so crypto/blake3.c crypto/blake3_dispatch.c crypto/blake3_portable.c \
+    crypto/blake3_sse2_x86-64_windows_msvc.asm crypto/blake3_sse41_x86-64_windows_msvc.asm crypto/blake3_avx2_x86-64_windows_msvc.asm \
+    crypto/blake3_avx512_x86-64_windows_msvc.asm
+    
 gcc -c -fPIC -O3 -msse2 crypto/blake3_sse2.c -o blake3_sse2.o
 gcc -c -fPIC -O3 -msse4.1 crypto/blake3_sse41.c -o blake3_sse41.o
 gcc -c -fPIC -O3 -mavx2 crypto/blake3_avx2.c -o blake3_avx2.o
