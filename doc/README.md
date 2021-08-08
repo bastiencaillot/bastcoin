@@ -9,6 +9,8 @@ Bastcoin Core is the original Bastcoin client and it builds the backbone of the 
 
 To download Bastcoin Core, visit [bastcoin.org](https://bastcoin.org/).
 
+PS: As said in release-process.md, the bastcoin being decentralized, it takes a little time and the gitian built after each release to have the files: . exe, tar.gz and . dmg . That’s why you have to follow the build file of your operating system for the moment to build the Bastcoin by yourself (if you are here, you are at least good at programming)
+
 Running
 ---------------------
 The following are some helpful notes on how to run Bastcoin Core on your native platform.
