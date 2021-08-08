@@ -1,3 +1,52 @@
+# Bastcoin 18.1 ❤️ 🧡 💛 💚 💙 💜 🖤 👀 🌍 👽
+
+<img align="center" src="share/pixmaps/bastcoin.ico">
+
+URL 🔗 https://bastcoin.org
+
+Mail 📧 // bastcoin@bastcoin.org
+
+## What is Bastcoin?
+
+The bastcoin is a cryptocurrency that has as its main source the bitcoin, but there are several differences between these two cryptocurrencies, including:
+
+-The hash algorithm is not Sha256d but Blake3, I invite you to look below at the README.md of Blake3 or go to the following url: https://github.com/BLAKE3-team/BLAKE3
+
+-maximum number of coins in circulation is 7,000,000 and not 21,000,000 as bitcoin
+
+-the target duration of proof of work per block is not 10 minutes but 4 minutes (however the initial reward per block remains 50 pieces, and is therefore halved every 70000 blocks)
+
+-difficulty is recalculated every 700 blocks
+
+-and lots of other things I probably forgot ;)
+
+## acknowledgements 👏
+
+Thanks to the 3 Github repositories without which the Bastcoin would never have existed:
+-https://github.com/bitcoin/bitcoin
+
+-https://github.com/litecoin-project/litecoin
+
+-https://github.com/BLAKE3-team/BLAKE3
+
+## License 📝
+
+Bastcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+information or see https://opensource.org/licenses/MIT.
+
+## Get bastcoin
+
+If you want to get Bastcoin Core, you have to build it in your operating system.
+You must go to the doc folder and find the markdown corresponding to your platform
+This page will be republished when you can download it from the website.
+Thank you for your understanding
+
+-------------------------------------------------
+
+Thank you for reading this far. You will find below the README of Blake3. 
+
+Bastien Caillot, founder of Bastcoin
+
 # The original Blake3 README is located at the following URL: https://github.com/BLAKE3-team/BLAKE3/blob/master/README.md
 
 # <a href="#"><img src="media_blake3/BLAKE3.svg" alt="BLAKE3" height=50></a>
