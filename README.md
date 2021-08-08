@@ -11,6 +11,7 @@ Mail 📧 // bastcoin@bastcoin.org
 The bastcoin is a cryptocurrency that has as its main source the bitcoin, but there are several differences between these two cryptocurrencies, including:
 
 -The hash algorithm is not Sha256d but Blake3, I invite you to look below at the README.md of Blake3 or go to the following url: https://github.com/BLAKE3-team/BLAKE3
+As you can see in this [picture](20210724_192028[1].jpg) , I did not find any cryptocurrency on Coinmarketcap having blake3 for algorithm
 
 -maximum number of coins in circulation is 7,000,000 and not 21,000,000 as bitcoin
 
