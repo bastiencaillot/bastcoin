@@ -1506,7 +1506,7 @@ AM_CONDITIONAL([BLAKE3_NO_SSE2],[test x$do_not_support_sse2 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_AVX512],[test x$do_not_support_avx512 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_AVX2],[test x$do_not_support_avx2 = xyes])
 AM_CONDITIONAL([USE_ASM],[test x$use_asm = xyes])
-AM_CONDITIONAL([USE_NEON],[test x$use_neon = xyes])
+AM_CONDITIONAL([BLAKE3_USE_NEON],[test x$use_neon = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
