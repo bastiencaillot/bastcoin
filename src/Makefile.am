@@ -575,7 +575,7 @@ bastcoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 bastcoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bitcoin_tx_SOURCES += bitcoin-tx-res.rc
+bastcoin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
 bastcoin_tx_LDADD = \
