@@ -58,6 +58,29 @@ LIBBITCOIN_CRYPTO_SHANI = crypto/libbitcoin_crypto_shani.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
+
+ifndef BLAKE3_NO_SSE41
+LIBBITCOIN_CRYPTO_BLAKE3_SSE41 = crypto/libbitcoin_crypto_blake3_sse41.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE41)
+endif
+ifndef BLAKE3_NO_SSE2
+LIBBITCOIN_CRYPTO_BLAKE3_SSE2 = crypto/libbitcoin_crypto_blake3_sse2.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE2)
+endif
+ifndef  BLAKE3_NO_AVX2
+LIBBITCOIN_CRYPTO_BLAKE3_AVX2 = crypto/libbitcoin_crypto_blake3_avx2.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX2)
+endif
+ifndef  BLAKE3_NO_AVX512
+LIBBITCOIN_CRYPTO_BLAKE3_AVX512 = crypto/libbitcoin_crypto_blake3_avx512.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX512)
+endif
+ifdef BLAKE_3_USE_NEON
+LIBBITCOIN_CRYPTO_BLAKE3_NEON = crypto/libbitcoin_crypto_blake3_neon.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_NEON)
+endif
+
+
 $(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
@@ -399,6 +422,28 @@ crypto_libbitcoin_crypto_shani_a_CPPFLAGS = $(AM_CPPFLAGS)
 crypto_libbitcoin_crypto_shani_a_CXXFLAGS += $(SHANI_CXXFLAGS)
 crypto_libbitcoin_crypto_shani_a_CPPFLAGS += -DENABLE_SHANI
 crypto_libbitcoin_crypto_shani_a_SOURCES = crypto/sha256_shani.cpp
+
+crypto_libbitcoin_crypto_blake3_avx2_a_SOURCES = crypto/blake3_avx2.c \
+  crypto/blake3_avx2_x86-64_unix.S \
+  crypto/blake3_avx2_x86-64_windows_gnu.S \
+  crypto/blake3_avx2_x86-64_windows_msvc.asm 
+  
+crypto_libbitcoin_crypto_blake3_avx512_a_SOURCES = crypto/blake3_avx512.c \
+  crypto/blake3_avx512_x86-64_unix.S \
+  crypto/blake3_avx512_x86-64_windows_gnu.S \
+  crypto/blake3_avx512_x86-64_windows_msvc.asm 
+
+crypto_libbitcoin_crypto_blake3_sse2_a_SOURCES = crypto/blake3_sse2.c \
+  crypto/blake3_sse2_x86-64_unix.S \
+  crypto/blake3_sse2_x86-64_windows_gnu.S \
+  crypto/blake3_sse2_x86-64_windows_msvc.asm 
+
+crypto_libbitcoin_crypto_blake3_sse41_a_SOURCES = crypto/blake3_sse41.c \
+  crypto/blake3_sse41_x86-64_unix.S \
+  crypto/blake3_sse41_x86-64_windows_gnu.S \
+  crypto/blake3_sse41_x86-64_windows_msvc.asm 
+
+crypto_libbitcoin_crypto_blake3_neon_a_SOURCES =  crypto/blake3_neon.c 
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
