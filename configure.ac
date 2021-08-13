@@ -257,7 +257,6 @@ AC_ARG_ENABLE([werror],
     [enable_werror=no])
 
 AC_LANG_PUSH([C++])
-AC_LANG_PUSH([C])
 AX_CHECK_COMPILE_FLAG([-Werror],[CXXFLAG_WERROR="-Werror"],[CXXFLAG_WERROR=""])
 
 if test "x$enable_debug" = xyes; then
@@ -347,10 +346,6 @@ AX_CHECK_COMPILE_FLAG([-msse4.2],[[SSE42_CXXFLAGS="-msse4.2"]],,[[$CXXFLAG_WERRO
 AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CXXFLAGS="-msse4.1"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-mavx -mavx2],[[AVX2_CXXFLAGS="-mavx -mavx2"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-msse4 -msha],[[SHANI_CXXFLAGS="-msse4 -msha"]],,[[$CXXFLAG_WERROR]])
-AX_CHECK_COMPILE_FLAG([-msse2],[[SSE2_CFLAGS="-msse2"]],,[[$CFLAG_WERROR]])
-AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CFLAGS="-msse4.1"]],,[[$CFLAG_WERROR]])
-AX_CHECK_COMPILE_FLAG([-mavx2],[[AVX2_CFLAGS="-mavx2"]],,[[$CFLAG_WERROR]])
-AX_CHECK_COMPILE_FLAG([-mavx512f -mavx512vl],[[AVX512_CFLAGS="-mavx512f -mavx512vl"]],,[[$CFLAG_WERROR]])
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $SSE42_CXXFLAGS"
@@ -388,78 +383,6 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
  [ AC_MSG_RESULT(no)]
 )
 CXXFLAGS="$TEMP_CXXFLAGS"
-
-TEMP_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS $SSE41_CFLAGS"
-AC_MSG_CHECKING(for SSE4.1 intrinsics for blake3)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-    #include <stdint.h>
-    #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
-  ]],[[
-    blake3_hash_many_sse41();
-  ]])],
- [ AC_MSG_RESULT(yes) ],
- [ AC_MSG_RESULT(no); do_not_support_sse41=yes; AC_DEFINE(BLAKE3_NO_SSE41, 1, [Define this if SSE4.1 is not supported])]
-)
-CFLAGS="$TEMP_CFLAGS"
-
-TEMP_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS $SSE2_CFLAGS"
-AC_MSG_CHECKING(for SSE2 intrinsics for blake3)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-    #include <stdint.h>
-    #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
-  ]],[[
-    blake3_hash_many_sse2();
-  ]])],
- [ AC_MSG_RESULT(yes) ],
- [ AC_MSG_RESULT(no); do_not_support_sse2=yes; AC_DEFINE(BLAKE3_NO_SSE2, 1, [Define this if SSE2 is not supported])]
-)
-CFLAGS="$TEMP_CFLAGS"
-
-TEMP_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS $AVX2_CFLAGS"
-AC_MSG_CHECKING(for AVX2 intrinsics for blake3)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-    #include <stdint.h>
-    #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
-  ]],[[
-    blake3_hash_many_avx2();
-  ]])],
- [ AC_MSG_RESULT(yes) ],
- [ AC_MSG_RESULT(no); do_not_support_avx2=yes; AC_DEFINE(BLAKE3_NO_AVX2, 1, [Define this if AVX2 is not supported])]
-)
-CFLAGS="$TEMP_CFLAGS"
-
-TEMP_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS $AVX512_CFLAGS"
-AC_MSG_CHECKING(for AVX512 intrinsics for blake3)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-    #include <stdint.h>
-    #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
-  ]],[[
-    blake3_hash_many_avx512();
-  ]])],
- [ AC_MSG_RESULT(yes) ],
- [ AC_MSG_RESULT(no); do_not_support_avx512=yes; AC_DEFINE(BLAKE3_NO_AVX512, 1, [Define this if AVX512 is not supported])]
-)
-CFLAGS="$TEMP_CFLAGS"
-
-AC_MSG_CHECKING(for NEON intrinsics for blake3)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-    #include <stdint.h>
-    #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
-  ]],[[
-    blake3_hash_many_neon();
-  ]])],
- [ AC_MSG_RESULT(yes); use_neon=yes; AC_DEFINE(BLAKE3_USE_NEON, 1, [Define this if Neon is supported]) ],
- [ AC_MSG_RESULT(no)]
-)
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $AVX2_CXXFLAGS"
@@ -1501,12 +1424,7 @@ AM_CONDITIONAL([ENABLE_HWCRC32],[test x$enable_hwcrc32 = xyes])
 AM_CONDITIONAL([ENABLE_SSE41],[test x$enable_sse41 = xyes])
 AM_CONDITIONAL([ENABLE_AVX2],[test x$enable_avx2 = xyes])
 AM_CONDITIONAL([ENABLE_SHANI],[test x$enable_shani = xyes])
-AM_CONDITIONAL([BLAKE3_NO_SSE41],[test x$do_not_support_sse41 = xyes])
-AM_CONDITIONAL([BLAKE3_NO_SSE2],[test x$do_not_support_sse2 = xyes])
-AM_CONDITIONAL([BLAKE3_NO_AVX512],[test x$do_not_support_avx512 = xyes])
-AM_CONDITIONAL([BLAKE3_NO_AVX2],[test x$do_not_support_avx2 = xyes])
 AM_CONDITIONAL([USE_ASM],[test x$use_asm = xyes])
-AM_CONDITIONAL([BLAKE3_USE_NEON],[test x$use_neon = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
@@ -1533,10 +1451,6 @@ AC_SUBST(BITCOIN_CLI_NAME)
 AC_SUBST(BITCOIN_TX_NAME)
 AC_SUBST(BITCOIN_WALLET_TOOL_NAME)
 
-AC_SUBST(SSE41_CFLAGS)
-AC_SUBST(SSE2_CFLAGS)
-AC_SUBST(AVX512_CFLAGS)
-AC_SUBST(AVX2_CFLAGS)
 AC_SUBST(RELDFLAGS)
 AC_SUBST(DEBUG_CPPFLAGS)
 AC_SUBST(WARN_CXXFLAGS)
