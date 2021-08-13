@@ -58,29 +58,6 @@ LIBBITCOIN_CRYPTO_SHANI = crypto/libbitcoin_crypto_shani.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
-
-if !BLAKE3_NO_SSE41
-LIBBITCOIN_CRYPTO_BLAKE3_SSE41 = crypto/libbitcoin_crypto_blake3_sse41.a
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE41)
-endif
-if !BLAKE3_NO_SSE2
-LIBBITCOIN_CRYPTO_BLAKE3_SSE2 = crypto/libbitcoin_crypto_blake3_sse2.a
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE2)
-endif
-if !BLAKE3_NO_AVX2
-LIBBITCOIN_CRYPTO_BLAKE3_AVX2 = crypto/libbitcoin_crypto_blake3_avx2.a
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX2)
-endif
-if !BLAKE3_NO_AVX512
-LIBBITCOIN_CRYPTO_BLAKE3_AVX512 = crypto/libbitcoin_crypto_blake3_avx512.a
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX512)
-endif
-if BLAKE3_USE_NEON
-LIBBITCOIN_CRYPTO_BLAKE3_NEON = crypto/libbitcoin_crypto_blake3_neon.a
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_NEON)
-endif
-
-
 $(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
@@ -379,9 +356,26 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/Makefile.testing \
   crypto/blake3.c \
   crypto/blake3.h \
+  crypto/blake3_avx2.c \
+  crypto/blake3_avx2_x86-64_unix.S \
+  crypto/blake3_avx2_x86-64_windows_gnu.S \
+  crypto/blake3_avx2_x86-64_windows_msvc.asm \
+  crypto/blake3_avx512.c \
+  crypto/blake3_avx512_x86-64_unix.S \
+  crypto/blake3_avx512_x86-64_windows_gnu.S \
+  crypto/blake3_avx512_x86-64_windows_msvc.asm \
   crypto/blake3_dispatch.c \
   crypto/blake3_impl.h \
+  crypto/blake3_neon.c \
   crypto/blake3_portable.c \
+  crypto/blake3_sse2.c \
+  crypto/blake3_sse2_x86-64_unix.S \
+  crypto/blake3_sse2_x86-64_windows_gnu.S \
+  crypto/blake3_sse2_x86-64_windows_msvc.asm \
+  crypto/blake3_sse41.c \
+  crypto/blake3_sse41_x86-64_unix.S \
+  crypto/blake3_sse41_x86-64_windows_gnu.S \
+  crypto/blake3_sse41_x86-64_windows_msvc.asm \
   crypto/test.py
 
 if USE_ASM
@@ -405,16 +399,6 @@ crypto_libbitcoin_crypto_shani_a_CPPFLAGS = $(AM_CPPFLAGS)
 crypto_libbitcoin_crypto_shani_a_CXXFLAGS += $(SHANI_CXXFLAGS)
 crypto_libbitcoin_crypto_shani_a_CPPFLAGS += -DENABLE_SHANI
 crypto_libbitcoin_crypto_shani_a_SOURCES = crypto/sha256_shani.cpp
-
-crypto_libbitcoin_crypto_blake3_avx2_a_SOURCES = crypto/blake3_avx2.c 
-  
-crypto_libbitcoin_crypto_blake3_avx512_a_SOURCES = crypto/blake3_avx512.c 
-
-crypto_libbitcoin_crypto_blake3_sse2_a_SOURCES = crypto/blake3_sse2.c
-
-crypto_libbitcoin_crypto_blake3_sse41_a_SOURCES = crypto/blake3_sse41.c 
-
-crypto_libbitcoin_crypto_blake3_neon_a_SOURCES =  crypto/blake3_neon.c 
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
@@ -575,7 +559,7 @@ bastcoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 bastcoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-bastcoin_tx_SOURCES += bitcoin-tx-res.rc
+bitcoin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
 bastcoin_tx_LDADD = \
