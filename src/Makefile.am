@@ -358,7 +358,6 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/blake3.h \
   crypto/blake3_dispatch.c \
   crypto/blake3_impl.h \
-  crypto/blake3_neon.c \
   crypto/blake3_portable.c \
   crypto/test.py
 
