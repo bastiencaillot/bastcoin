@@ -64,12 +64,12 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 70000;
-        consensus.BIP16Height = 578;
+        //consensus.BIP16Height = 578;
         //consensus.BIP16Exception = uint256S("0x00000000000002dc756eebf4f49723ed8d30cc28a5f108eb94b1ba88ac4f9c22");
-        consensus.BIP34Height = 10082;
+        //consensus.BIP34Height = 10082;
         //consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8"); not now ;)
-        consensus.BIP65Height = 15930; 
-        consensus.BIP66Height = 16964;
+        //consensus.BIP65Height = 15930; 
+        //consensus.BIP66Height = 16964;
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 700 * 4 * 60; // 2800 minutes
         consensus.nPowTargetSpacing = 4 * 60;
@@ -180,12 +180,12 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 70000;
-        consensus.BIP16Height = 0; // always enforce P2SH BIP16 on testnet, like Litecoin
+        //consensus.BIP16Height = 0; // always enforce P2SH BIP16 on testnet, like Litecoin
         //consensus.BIP16Exception = uint256S("0x00000000dd30457c001f4095d208cc1296b0eed002427aa599874af7a432b105");
-        consensus.BIP34Height = 21111;
+        //consensus.BIP34Height = 21111;
         //consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8"); not now ;)
-        consensus.BIP65Height = 581885; 
-        consensus.BIP66Height = 330776; 
+        //consensus.BIP65Height = 581885; 
+        //consensus.BIP66Height = 330776; 
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 700* 4 * 60; // two weeks
         consensus.nPowTargetSpacing = 4 * 60;
@@ -273,11 +273,11 @@ public:
     explicit CRegTestParams(const ArgsManager& args) {
         strNetworkID = "regtest";
         consensus.nSubsidyHalvingInterval = 150;
-        consensus.BIP16Exception = uint256();
-        consensus.BIP34Height = 500; // BIP34 activated on regtest (Used in functional tests)
-        consensus.BIP34Hash = uint256();
-        consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in functional tests)
-        consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in functional tests)
+        //consensus.BIP16Exception = uint256();
+        //consensus.BIP34Height = 500; // BIP34 activated on regtest (Used in functional tests)
+        //consensus.BIP34Hash = uint256();
+        //consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in functional tests)
+        //consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in functional tests)
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 700 * 4 * 60; // 2800 minutes
         consensus.nPowTargetSpacing = 4 * 60;
