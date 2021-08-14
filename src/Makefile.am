@@ -58,6 +58,11 @@ LIBBITCOIN_CRYPTO_SHANI = crypto/libbitcoin_crypto_shani.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
+if !BLAKE3_NO_AVX2
+LIBBITCOIN_CRYPTO_BLAKE3_AVX2 = crypto/libbitcoin_crypto_blake3_avx2.a
+LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX2)
+endif
+
 $(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
@@ -356,7 +361,6 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/Makefile.testing \
   crypto/blake3.c \
   crypto/blake3.h \
-  crypto/blake3_avx2.c \
   crypto/blake3_avx512.c \
   crypto/blake3_dispatch.c \
   crypto/blake3_impl.h \
@@ -369,6 +373,8 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
 if USE_ASM
 crypto_libbitcoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
 endif
+
+crypto_libbitcoin_crypto_blake3_avx2_a_SOURCES = crypto/blake3_avx2.c 
 
 crypto_libbitcoin_crypto_sse41_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 crypto_libbitcoin_crypto_sse41_a_CPPFLAGS = $(AM_CPPFLAGS)
