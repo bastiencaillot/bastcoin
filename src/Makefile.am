@@ -356,7 +356,14 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/Makefile.testing \
   crypto/blake3.c \
   crypto/blake3.h \
+  crypto/blake3_avx2.c \
+  crypto/blake3_avx512.c \
   crypto/blake3_dispatch.c \
+  crypto/blake3_impl.h \
+  crypto/blake3_neon.c \
+  crypto/blake3_portable.c \
+  crypto/blake3_sse2.c \
+  crypto/blake3_sse41.c \
   crypto/test.py
 
 if USE_ASM
