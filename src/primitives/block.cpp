@@ -18,22 +18,15 @@
 
 uint256 CBlockHeader::GetHash() const
 {
-    return GetPoWHash();
+    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
+  uint8_t output[BLAKE3_OUT_LEN];
+  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
 }
 
 uint256 CBlockHeader::GetSerializedHash() const 
 {
     return SerializeHash(*this);
 }
-
-uint256 CBlockHeader::GetPoWHash() const
-{
-       
-   // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
-  uint8_t output[BLAKE3_OUT_LEN];
-  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
-}
-
 
 std::string CBlock::ToString() const
 {
