@@ -2,6 +2,8 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+gcc -shared -O3 -o libblake3.so crypto/blake3.c crypto/blake3_dispatch.c crypto/blake3_portable.c
+
 DIST_SUBDIRS = secp256k1 univalue
 
 AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS) $(GPROF_LDFLAGS) $(SANITIZER_LDFLAGS)
@@ -354,10 +356,6 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/siphash.h \
   crypto/.gitignore \
   crypto/Makefile.testing \
-  crypto/blake3.c \
-  crypto/blake3.h \
-  crypto/blake3_dispatch.c \
-  crypto/portable.c \
   crypto/test.py
 
 if USE_ASM
