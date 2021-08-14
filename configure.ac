@@ -350,6 +350,7 @@ AX_CHECK_COMPILE_FLAG([-msse2],[[SSE2_CFLAGS="-msse2"]],,[[$CFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CFLAGS="-msse4.1"]],,[[$CFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-mavx2],[[AVX2_CFLAGS="-mavx2"]],,[[$CFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-mavx512f -mavx512vl],[[AVX512_CFLAGS="-mavx512f -mavx512vl"]],,[[$CFLAG_WERROR]])
+X_CHECK_COMPILE_FLAG([+neon-vfpv4],[[NEON_CFLAGS="+neon-vfpv4"]],,[[$CFLAG_WERROR]])
 
 TEMP_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS $SSE41_CFLAGS"
@@ -447,6 +448,21 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
  [ AC_MSG_RESULT(no)]
 )
 CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $NEON_CFLAGS"
+AC_MSG_CHECKING(for NEON intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_neon();
+  ]])],
+ [ AC_MSG_RESULT(yes); use_neon=yes; AC_DEFINE(BLAKE3_USE_NEON, 1, [Define this if Neon is supported]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CFLAGS="$TEMP_CFLAGS"
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $AVX2_CXXFLAGS"
@@ -1493,6 +1509,7 @@ AM_CONDITIONAL([BLAKE3_NO_SSE41],[test x$do_not_support_sse41 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_SSE2],[test x$do_not_support_sse2 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_AVX512],[test x$do_not_support_avx512 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_AVX2],[test x$do_not_support_avx2 = xyes])
+AM_CONDITIONAL([BLAKE3_USE_NEON],[test x$use_neon = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
