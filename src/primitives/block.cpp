@@ -12,15 +12,16 @@
 #include <crypto/blake3.h>
 #include <init.h>
 
-// Initialize the hasher.
-  blake3_hasher hasher;
-  blake3_hasher_init(&hasher);
-
 uint256 CBlockHeader::GetHash() const
 {
+  
+  // Initialize the hasher.
+  blake3_hasher hasher;
+  blake3_hasher_init(&hasher);
+  
     // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
   uint8_t output[BLAKE3_OUT_LEN];
-  return blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
 }
 
 uint256 CBlockHeader::GetSerializedHash() const 
