@@ -59,23 +59,23 @@ LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
 if !BLAKE3_NO_SSE41
-LIBBITCOIN_CRYPTO_BLAKE3_SSE41 = crypto/libbitcoin_crypto_blake3_sse41.a
+LIBBITCOIN_CRYPTO_BLAKE3_SSE41 = crypto_libbitcoin_crypto_blake3_sse41.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE41)
 endif
 if !BLAKE3_NO_SSE2
-LIBBITCOIN_CRYPTO_BLAKE3_SSE2 = crypto/libbitcoin_crypto_blake3_sse2.a
+LIBBITCOIN_CRYPTO_BLAKE3_SSE2 = crypto_libbitcoin_crypto_blake3_sse2.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_SSE2)
 endif
 if !BLAKE3_NO_AVX2
-LIBBITCOIN_CRYPTO_BLAKE3_AVX2 = crypto/libbitcoin_crypto_blake3_avx2.a
+LIBBITCOIN_CRYPTO_BLAKE3_AVX2 = crypto_libbitcoin_crypto_blake3_avx2.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX2)
 endif
 if !BLAKE3_NO_AVX512
-LIBBITCOIN_CRYPTO_BLAKE3_AVX512 = crypto/libbitcoin_crypto_blake3_avx512.a
+LIBBITCOIN_CRYPTO_BLAKE3_AVX512 = crypto_libbitcoin_crypto_blake3_avx512.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_AVX512)
 endif
 if BLAKE3_USE_NEON
-LIBBITCOIN_CRYPTO_BLAKE3_NEON = crypto/libbitcoin_crypto_blake3_neon.a
+LIBBITCOIN_CRYPTO_BLAKE3_NEON = crypto_libbitcoin_crypto_blake3_neon.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_BLAKE3_NEON)
 endif
 
@@ -387,7 +387,7 @@ crypto_libbitcoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
 endif
 
 crypto_libbitcoin_crypto_blake3_avx2_a_SOURCES = crypto/blake3_avx2.c 
-  
+
 crypto_libbitcoin_crypto_blake3_avx512_a_SOURCES = crypto/blake3_avx512.c 
 
 crypto_libbitcoin_crypto_blake3_sse2_a_SOURCES = crypto/blake3_sse2.c
