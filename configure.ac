@@ -346,6 +346,22 @@ AX_CHECK_COMPILE_FLAG([-msse4.2],[[SSE42_CXXFLAGS="-msse4.2"]],,[[$CXXFLAG_WERRO
 AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CXXFLAGS="-msse4.1"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-mavx -mavx2],[[AVX2_CXXFLAGS="-mavx -mavx2"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-msse4 -msha],[[SHANI_CXXFLAGS="-msse4 -msha"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mavx2],[[AVX2_CFLAGS="-mavx2"]],,[[$CFLAG_WERROR]])
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $AVX2_CFLAGS"
+AC_MSG_CHECKING(for AVX2 intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_avx2();
+  ]])],
+ [ AC_MSG_RESULT(yes) ],
+ [ AC_MSG_RESULT(no); do_not_support_avx2=yes; AC_DEFINE(BLAKE3_NO_AVX2, 1, [Define this if AVX2 is not supported])]
+)
+CFLAGS="$TEMP_CFLAGS"
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $SSE42_CXXFLAGS"
@@ -1425,6 +1441,7 @@ AM_CONDITIONAL([ENABLE_SSE41],[test x$enable_sse41 = xyes])
 AM_CONDITIONAL([ENABLE_AVX2],[test x$enable_avx2 = xyes])
 AM_CONDITIONAL([ENABLE_SHANI],[test x$enable_shani = xyes])
 AM_CONDITIONAL([USE_ASM],[test x$use_asm = xyes])
+AM_CONDITIONAL([BLAKE3_NO_AVX2],[test x$do_not_support_avx2 = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
