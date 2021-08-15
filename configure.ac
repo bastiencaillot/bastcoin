@@ -220,12 +220,6 @@ AC_ARG_ENABLE([bip70],
   [disable BIP70 (payment protocol) support in GUI (enabled by default)])],
   [enable_bip70=$enableval],
   [enable_bip70=auto])
-  
-AC_ARG_ENABLE([neon],
-  [AS_HELP_STRING([--enable-neon],
-  [enable Neon instructions in the blake3 library. (default is disabled)])],
-  [use_neon=$enableval],
-  [use_neon=no])
 
 AC_ARG_WITH([protoc-bindir],[AS_HELP_STRING([--with-protoc-bindir=BIN_DIR],[specify protoc bin path])], [protoc_bin_path=$withval], [])
 
@@ -261,6 +255,104 @@ AC_ARG_ENABLE([werror],
                     [Treat certain compiler warnings as errors (default is no)])],
     [enable_werror=$enableval],
     [enable_werror=no])
+    
+AC_LANG_PUSH([C])
+AX_CHECK_COMPILE_FLAG([-Werror],[CFLAG_WERROR="-Werror"],[CFLAG_WERROR=""])
+
+AX_CHECK_COMPILE_FLAG([-msse2],[[SSE2_CFLAGS="-msse2"]],,[[$CFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CFLAGS="-msse4.1"]],,[[$CFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mavx2],[[AVX2_CFLAGS="-mavx2"]],,[[$CFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mavx512f -mavx512vl],[[AVX512_CFLAGS="-mavx512f -mavx512vl"]],,[[$CFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mfpu=neon],[[NEON_CFLAGS="-mfpu=neon"]],,[[$CFLAG_WERROR]])
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $SSE41_CFLAGS"
+AC_MSG_CHECKING(for SSE4.1 intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_sse41();
+  ]])],
+ [ AC_MSG_RESULT(yes) ],
+ [ AC_MSG_RESULT(no); do_not_support_sse41=yes; AC_DEFINE(BLAKE3_NO_SSE41, 1, [Define this if SSE4.1 is not supported])]
+)
+CFLAGS="$TEMP_CFLAGS"
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $SSE2_CFLAGS"
+AC_MSG_CHECKING(for SSE2 intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_sse2();
+  ]])],
+ [ AC_MSG_RESULT(yes) ],
+ [ AC_MSG_RESULT(no); do_not_support_sse2=yes; AC_DEFINE(BLAKE3_NO_SSE2, 1, [Define this if SSE2 is not supported])]
+)
+CFLAGS="$TEMP_CFLAGS"
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $AVX2_CFLAGS"
+AC_MSG_CHECKING(for AVX2 intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_avx2();
+  ]])],
+ [ AC_MSG_RESULT(yes) ],
+ [ AC_MSG_RESULT(no); do_not_support_avx2=yes; AC_DEFINE(BLAKE3_NO_AVX2, 1, [Define this if AVX2 is not supported])]
+)
+CFLAGS="$TEMP_CFLAGS"
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $AVX512_CFLAGS"
+AC_MSG_CHECKING(for AVX512 intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_avx512();
+  ]])],
+ [ AC_MSG_RESULT(yes) ],
+ [ AC_MSG_RESULT(no); do_not_support_avx512=yes; AC_DEFINE(BLAKE3_NO_AVX512, 1, [Define this if AVX512 is not supported])]
+)
+CFLAGS="$TEMP_CFLAGS"
+
+TEMP_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $NEON_CFLAGS"
+AC_MSG_CHECKING(for NEON intrinsics for blake3)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+    #include <src/crypto/blake3_impl.h>
+  ]],[[
+    blake3_hash_many_neon();
+  ]])],
+ [ AC_MSG_RESULT(yes); use_neon=yes; AC_DEFINE(BLAKE3_USE_NEON, 1, [Define this if Neon is supported]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CFLAGS="$TEMP_CFLAGS"
+
+AM_CONDITIONAL([BLAKE3_NO_SSE41],[test x$do_not_support_sse41 = xyes])
+AM_CONDITIONAL([BLAKE3_NO_SSE2],[test x$do_not_support_sse2 = xyes])
+AM_CONDITIONAL([BLAKE3_NO_AVX512],[test x$do_not_support_avx512 = xyes])
+AM_CONDITIONAL([BLAKE3_NO_AVX2],[test x$do_not_support_avx2 = xyes])
+AM_CONDITIONAL([BLAKE3_USE_NEON],[test x$use_neon = xyes])
+
+AC_SUBST(SSE41_CFLAGS)
+AC_SUBST(SSE2_CFLAGS)
+AC_SUBST(AVX512_CFLAGS)
+AC_SUBST(AVX2_CFLAGS)
+AC_SUBST(NEON_CFLAGS)
+
+AC_LANG_POP ([C])
 
 AC_LANG_PUSH([C++])
 AX_CHECK_COMPILE_FLAG([-Werror],[CXXFLAG_WERROR="-Werror"],[CXXFLAG_WERROR=""])
@@ -352,7 +444,6 @@ AX_CHECK_COMPILE_FLAG([-msse4.2],[[SSE42_CXXFLAGS="-msse4.2"]],,[[$CXXFLAG_WERRO
 AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CXXFLAGS="-msse4.1"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-mavx -mavx2],[[AVX2_CXXFLAGS="-mavx -mavx2"]],,[[$CXXFLAG_WERROR]])
 AX_CHECK_COMPILE_FLAG([-msse4 -msha],[[SHANI_CXXFLAGS="-msse4 -msha"]],,[[$CXXFLAG_WERROR]])
-AX_CHECK_COMPILE_FLAG([-mfpu=neon],[[NEON_CFLAGS="-mfpu=neon"]],,[[$CFLAG_WERROR]])
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $SSE42_CXXFLAGS"
@@ -1402,16 +1493,6 @@ else
   BUILD_TEST=""
 fi
 
-AC_MSG_CHECKING([whether to enable neon instructions])
-if test x$use_neon != xno; then
-  AC_MSG_RESULT(yes)
-  AC_DEFINE([BLAKE3_USE_NEON],[1],[Define if Neon support should be compiled in])
-  use_neon=yes
-  NEON_CFLAGS="$NEON_CFLAGS -DBLAKE3_USE_NEON"
-else
-  AC_MSG_RESULT(no)
-fi
-
 AC_MSG_CHECKING([whether to reduce exports])
 if test x$use_reduce_exports = xyes; then
   AC_MSG_RESULT([yes])
@@ -1442,7 +1523,6 @@ AM_CONDITIONAL([ENABLE_SSE41],[test x$enable_sse41 = xyes])
 AM_CONDITIONAL([ENABLE_AVX2],[test x$enable_avx2 = xyes])
 AM_CONDITIONAL([ENABLE_SHANI],[test x$enable_shani = xyes])
 AM_CONDITIONAL([USE_ASM],[test x$use_asm = xyes])
-AM_CONDITIONAL([BLAKE3_USE_NEON], [test x$use_neon = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
@@ -1504,7 +1584,6 @@ AC_SUBST(EVENT_PTHREADS_LIBS)
 AC_SUBST(ZMQ_LIBS)
 AC_SUBST(PROTOBUF_LIBS)
 AC_SUBST(QR_LIBS)
-AC_SUBST(BLAKE3_USE_NEON)
 AC_CONFIG_FILES([Makefile src/Makefile doc/man/Makefile share/setup.nsi share/qt/Info.plist test/config.ini])
 AC_CONFIG_FILES([contrib/devtools/split-debug.sh],[chmod +x contrib/devtools/split-debug.sh])
 AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
@@ -1581,7 +1660,6 @@ echo "  with bench    = $use_bench"
 echo "  with upnp     = $use_upnp"
 echo "  use asm       = $use_asm"
 echo "  sanitizers    = $use_sanitizers"
-echo "  blake3 neon   = $use_neon"
 echo "  debug enabled = $enable_debug"
 echo "  gprof enabled = $enable_gprof"
 echo "  werror        = $enable_werror"
