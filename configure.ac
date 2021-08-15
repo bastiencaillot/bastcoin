@@ -256,7 +256,6 @@ AC_ARG_ENABLE([werror],
     [enable_werror=$enableval],
     [enable_werror=no])
     
-AC_LANG_PUSH([C])
 AX_CHECK_COMPILE_FLAG([-Werror],[CFLAG_WERROR="-Werror"],[CFLAG_WERROR=""])
 
 AX_CHECK_COMPILE_FLAG([-msse2],[[SSE2_CFLAGS="-msse2"]],,[[$CFLAG_WERROR]])
@@ -339,8 +338,6 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
  [ AC_MSG_RESULT(no)]
 )
 CFLAGS="$TEMP_CFLAGS"
-
-AC_LANG_POP ([C])
 
 AM_CONDITIONAL([BLAKE3_NO_SSE41],[test x$do_not_support_sse41 = xyes])
 AM_CONDITIONAL([BLAKE3_NO_SSE2],[test x$do_not_support_sse2 = xyes])
