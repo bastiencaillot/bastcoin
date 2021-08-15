@@ -301,7 +301,7 @@ AC_MSG_CHECKING(for AVX2 intrinsics for blake3)
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
     #include <stdint.h>
     #include <immintrin.h>
-    #include <src/crypto/blake3_impl.h>
+    #include <src/crypto/blake3_avx2.c>
   ]],[[
     blake3_hash_many_avx2();
   ]])],
