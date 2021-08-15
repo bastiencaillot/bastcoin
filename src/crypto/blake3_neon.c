@@ -1,6 +1,6 @@
 #include "blake3_impl.h"
 
-#include <arm_neon.h>
+#include "arm_neon.h"
 
 // TODO: This is probably incorrect for big-endian ARM. How should that work?
 INLINE uint32x4_t loadu_128(const uint8_t src[16]) {
