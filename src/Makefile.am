@@ -356,9 +356,9 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/Makefile.testing \
   crypto/blake3.c \
   crypto/blake3.h \
-  crypto/blake3_avx2.o \
-  crypto/blake3_avx512.o \
-  crypto/blake3_dispatch.o \
+  crypto/blake3_avx2.c \
+  crypto/blake3_avx512.c \
+  crypto/blake3_dispatch.c \
   crypto/blake3_impl.h \
   crypto/blake3_neon.c \
   crypto/blake3_portable.c \
