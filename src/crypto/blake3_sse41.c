@@ -1,5 +1,7 @@
 #include "blake3_impl.h"
 
+#if defined(__SSE4_1__)
+
 #include <immintrin.h>
 
 #define DEGREE 4
@@ -557,3 +559,5 @@ void blake3_hash_many_sse41(const uint8_t *const *inputs, size_t num_inputs,
     out = &out[BLAKE3_OUT_LEN];
   }
 }
+
+#endif
