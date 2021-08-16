@@ -1,5 +1,7 @@
 #include "blake3_impl.h"
 
+#if defined(__AVX2__)
+
 #include <immintrin.h>
 
 #define DEGREE 8
@@ -314,7 +316,7 @@ void blake3_hash_many_avx2(const uint8_t *const *inputs, size_t num_inputs,
     num_inputs -= DEGREE;
     out = &out[DEGREE * BLAKE3_OUT_LEN];
   }
-#if !defined(BLAKE3_NO_SSE41)
+#if defined(__SSE4_1__)
   blake3_hash_many_sse41(inputs, num_inputs, blocks, key, counter,
                          increment_counter, flags, flags_start, flags_end, out);
 #else
@@ -323,3 +325,5 @@ void blake3_hash_many_avx2(const uint8_t *const *inputs, size_t num_inputs,
                             out);
 #endif
 }
+
+#endif
