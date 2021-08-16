@@ -140,19 +140,19 @@ void blake3_compress_in_place(uint32_t cv[8],
 #if defined(IS_X86)
   const enum cpu_feature features = get_cpu_features();
   MAYBE_UNUSED(features);
-#if !defined(BLAKE3_NO_AVX512)
+#if defined(__AVX512F__) && defined(__AVX512VL__) 
   if (features & AVX512VL) {
     blake3_compress_in_place_avx512(cv, block, block_len, counter, flags);
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE41)
+#if defined(__SSE4_1__)
   if (features & SSE41) {
     blake3_compress_in_place_sse41(cv, block, block_len, counter, flags);
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE2)
+#if defined(__SSE2__)
   if (features & SSE2) {
     blake3_compress_in_place_sse2(cv, block, block_len, counter, flags);
     return;
@@ -169,19 +169,19 @@ void blake3_compress_xof(const uint32_t cv[8],
 #if defined(IS_X86)
   const enum cpu_feature features = get_cpu_features();
   MAYBE_UNUSED(features);
-#if !defined(BLAKE3_NO_AVX512)
+#if defined(__AVX512F__) && defined(__AVX512VL__) 
   if (features & AVX512VL) {
     blake3_compress_xof_avx512(cv, block, block_len, counter, flags, out);
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE41)
+#if defined(__SSE4_1__)
   if (features & SSE41) {
     blake3_compress_xof_sse41(cv, block, block_len, counter, flags, out);
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE2)
+#if !defined(__SSE2__)
   if (features & SSE2) {
     blake3_compress_xof_sse2(cv, block, block_len, counter, flags, out);
     return;
@@ -198,7 +198,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
 #if defined(IS_X86)
   const enum cpu_feature features = get_cpu_features();
   MAYBE_UNUSED(features);
-#if !defined(BLAKE3_NO_AVX512)
+#if defined(__AVX512F__) && defined(__AVX512VL__) 
   if ((features & (AVX512F|AVX512VL)) == (AVX512F|AVX512VL)) {
     blake3_hash_many_avx512(inputs, num_inputs, blocks, key, counter,
                             increment_counter, flags, flags_start, flags_end,
@@ -206,7 +206,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_AVX2)
+#if defined(__AVX2__)
   if (features & AVX2) {
     blake3_hash_many_avx2(inputs, num_inputs, blocks, key, counter,
                           increment_counter, flags, flags_start, flags_end,
@@ -214,7 +214,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE41)
+#if defined(__SSE4_1__)
   if (features & SSE41) {
     blake3_hash_many_sse41(inputs, num_inputs, blocks, key, counter,
                            increment_counter, flags, flags_start, flags_end,
@@ -222,7 +222,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
     return;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE2)
+#if defined(__SSE2__)
   if (features & SSE2) {
     blake3_hash_many_sse2(inputs, num_inputs, blocks, key, counter,
                           increment_counter, flags, flags_start, flags_end,
@@ -232,7 +232,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
 #endif
 #endif
 
-#if defined(BLAKE3_USE_NEON)
+#if __ARM_NEON
   blake3_hash_many_neon(inputs, num_inputs, blocks, key, counter,
                         increment_counter, flags, flags_start, flags_end, out);
   return;
@@ -248,28 +248,28 @@ size_t blake3_simd_degree(void) {
 #if defined(IS_X86)
   const enum cpu_feature features = get_cpu_features();
   MAYBE_UNUSED(features);
-#if !defined(BLAKE3_NO_AVX512)
+#if defined(__AVX512F__) && defined(__AVX512VL__) 
   if ((features & (AVX512F|AVX512VL)) == (AVX512F|AVX512VL)) {
     return 16;
   }
 #endif
-#if !defined(BLAKE3_NO_AVX2)
+#if defined(__AVX2__)
   if (features & AVX2) {
     return 8;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE41)
+#if defined(__SSE4_1__)
   if (features & SSE41) {
     return 4;
   }
 #endif
-#if !defined(BLAKE3_NO_SSE2)
+#if defined(__SSE2__)
   if (features & SSE2) {
     return 4;
   }
 #endif
 #endif
-#if defined(BLAKE3_USE_NEON)
+#if __ARM_NEON
   return 4;
 #endif
   return 1;
