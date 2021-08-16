@@ -181,7 +181,7 @@ void blake3_compress_xof(const uint32_t cv[8],
     return;
   }
 #endif
-#if !defined(__SSE2__)
+#if defined(__SSE2__)
   if (features & SSE2) {
     blake3_compress_xof_sse2(cv, block, block_len, counter, flags, out);
     return;
