@@ -9,8 +9,6 @@
 
 #include <init.h>
 
-#include <crypto/blake3.h>
-
 #include <addrman.h>
 #include <amount.h>
 #include <banman.h>
@@ -1314,11 +1312,8 @@ bool AppInitMain(InitInterfaces& interfaces)
         if (!AppInitServers())
             return InitError(_("Unable to start HTTP server. See debug log for details."));
     }
+   
     
-    // Initialize the hasher.
-  blake3_hasher hasher;
-  blake3_hasher_init(&hasher);
-
     // ********************************************************* Step 5: verify wallet database integrity
     for (const auto& client : interfaces.chain_clients) {
         if (!client->verify()) {
