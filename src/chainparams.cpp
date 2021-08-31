@@ -174,7 +174,7 @@ public:
         //consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8"); not now ;)
         consensus.BIP65Height = 581885; 
         consensus.BIP66Height = 330776; 
-        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 700* 4 * 60; // two weeks
         consensus.nPowTargetSpacing = 4 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
@@ -213,7 +213,7 @@ public:
         genesis = CreateGenesisBlock(1630424948, 131026, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x000005cecfb44e01a497820125887f1fe62bb578eeaebc71be05170be300d9b9"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -303,7 +303,7 @@ public:
         genesis = CreateGenesisBlock(1630425043, 694465, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x0000018e08c6a4bcde60aa9f58433c2fda71d92cc64e51024f44128a0e99f37c"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
