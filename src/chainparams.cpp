@@ -114,8 +114,8 @@ public:
 
         genesis = CreateGenesisBlock(1630420154, 1381851, 0x1e0ffff0, 1, 50 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000004ad7079016ca67dd02a6654e83c9849d0ab96f39dc78f17ff8332831242")); 
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000000dcc45f9e20000000dcc45fb87000000000026082e0000000dcc45f92a0")); 
+        assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -143,7 +143,7 @@ public:
 
         checkpointData = {
             {
-               { 0, uint256S("0x000004ad7079016ca67dd02a6654e83c9849d0ab96f39dc78f17ff8332831242")},
+               { 0, uint256S("0x000000dcc45f9e20000000dcc45fb87000000000026082e0000000dcc45f92a0")},
               
             }
         };
