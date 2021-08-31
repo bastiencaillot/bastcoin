@@ -114,7 +114,7 @@ public:
 
         genesis = CreateGenesisBlock(1630420154, 1381851, 0x1e0ffff0, 1, 50 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000dcc45f9e20000000dcc45fb87000000000026082e0000000dcc45f92a0")); 
+        assert(consensus.hashGenesisBlock == uint256S("0x")); 
         assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -212,7 +212,7 @@ public:
 
         genesis = CreateGenesisBlock(1630424948, 131026, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000005cecfb44e01a497820125887f1fe62bb578eeaebc71be05170be300d9b9"));
+        assert(consensus.hashGenesisBlock == uint256S("0x"));
         assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         vFixedSeeds.clear();
@@ -302,7 +302,7 @@ public:
 
         genesis = CreateGenesisBlock(1630425043, 694465, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000018e08c6a4bcde60aa9f58433c2fda71d92cc64e51024f44128a0e99f37c"));
+        assert(consensus.hashGenesisBlock == uint256S("0x"));
         assert(genesis.hashMerkleRoot == uint256S("0x88421893bc6f2b7722abae1ed614ba68a1d0a58ad02b8e17bc9aeca1b48ca3f6"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
