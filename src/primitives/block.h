@@ -62,7 +62,7 @@ public:
 
     uint256 GetHash() const;
     
-    uint256 GetSerializedHash() const;
+    uint256 GetPoWHash() const;
 
     int64_t GetBlockTime() const
     {
