@@ -10,8 +10,7 @@
 #include <util/strencodings.h>
 #include <crypto/common.h>
 #include <crypto/blake3.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include <iterator>
 
 uint256 CBlockHeader::GetHash() const
 {
