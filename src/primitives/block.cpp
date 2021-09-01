@@ -13,19 +13,18 @@
 
 uint256 CBlockHeader::GetHash() const
 {
-  
-  // Initialize the hasher.
-  blake3_hasher hasher;
-  blake3_hasher_init(&hasher);
-  
-    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
-  uint8_t output[BLAKE3_OUT_LEN];
-  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+    return SerializeHash(*this);
 }
 
-uint256 CBlockHeader::GetSerializedHash() const 
-{
-    return SerializeHash(*this);
+uint256 CBlockHeader::GetPoWHash() const
+{ 
+  //Initialize a blake3_hasher in the key derivation mode
+  blake3_hasher hasher;
+  blake3_hasher_init_derive_key(&hasher? BEGIN(nVersion));
+  
+  // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
+  uint8_t output[BLAKE3_OUT_LEN];
+  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
 }
 
 std::string CBlock::ToString() const
