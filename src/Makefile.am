@@ -362,7 +362,8 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/blake3_neon.c \
   crypto/blake3_portable.c \
   crypto/blake3_sse2.c \
-  crypto/blake3_sse41.c 
+  crypto/blake3_sse41.c \
+  crypto/hashblake3.h
 
 if USE_ASM
 crypto_libbitcoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
