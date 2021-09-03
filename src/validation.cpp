@@ -1724,6 +1724,15 @@ public:
 
 static ThresholdConditionCache warningcache[VERSIONBITS_NUM_BITS] GUARDED_BY(cs_main);
 
+// 0.13.0 was shipped with a segwit deployment defined for testnet, but not for
+// mainnet. We no longer need to support disabling the segwit deployment
+// except for testing purposes, due to limitations of the functional test
+// environment. See test/functional/p2p-segwit.py.
+static bool IsScriptWitnessEnabled(const Consensus::Params& params)
+{
+    return params.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout != 0;
+}
+
 
 static unsigned int GetBlockScriptFlags(const CBlockIndex* pindex, const Consensus::Params& consensusparams) EXCLUSIVE_LOCKS_REQUIRED(cs_main) {
     AssertLockHeld(cs_main);
@@ -1742,6 +1751,12 @@ static unsigned int GetBlockScriptFlags(const CBlockIndex* pindex, const Consens
         flags |= SCRIPT_VERIFY_P2SH;
     }
     
+    // Enforce WITNESS rules whenever P2SH is in effect (and the segwit
+    // deployment is defined).
+    if (flags & SCRIPT_VERIFY_P2SH && IsScriptWitnessEnabled(consensusparams)) {
+        flags |= SCRIPT_VERIFY_WITNESS;
+    }
+    
     // Start enforcing the DERSIG (BIP66) rule
     if (pindex->nHeight >= consensusparams.BIP66Height) {
         flags |= SCRIPT_VERIFY_DERSIG;
@@ -1757,12 +1772,6 @@ static unsigned int GetBlockScriptFlags(const CBlockIndex* pindex, const Consens
         flags |= SCRIPT_VERIFY_CHECKSEQUENCEVERIFY;
     }
     
-    // Start enforcing WITNESS rules using versionbits logic.
-    if (IsWitnessEnabled(pindex->pprev, consensusparams)) {
-        flags |= SCRIPT_VERIFY_WITNESS;
-    }
-
-    // Start enforcing NULLDUMMY rules using versionbits logic.  
     if (IsNullDummyEnabled(pindex->pprev, consensusparams)) {
         flags |= SCRIPT_VERIFY_NULLDUMMY;
     }
@@ -1870,9 +1879,8 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // Now that the whole chain is irreversibly beyond that time it is applied to all blocks except the
     // two in the chain that violate it. This prevents exploiting the issue against nodes during their
     // initial block download.
+    
     bool fEnforceBIP30 = true;
-    //bool fEnforceBIP30 = !((pindex->nHeight==91842 && pindex->GetBlockHash() == uint256S("0x00000000000a4d0a398161ffc163c503763b1f4360639393e0e4c8e300e0caec")) ||
-                          //(pindex->nHeight==91880 && pindex->GetBlockHash() == uint256S("0x00000000000743f190a18c5577a3c2d2a1f610ae9601ac046a38084ccb7cd721")));
 
     // Once BIP34 activated it was not possible to create new duplicate coinbases and thus other than starting
     // with the 2 existing duplicate coinbase pairs, not possible to create overwriting txs.  But by the
@@ -1900,7 +1908,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // future consensus change to do a new and improved version of BIP34 that
     // will actually prevent ever creating any duplicate coinbases in the
     // future.
-    //static constexpr int BIP34_IMPLIES_BIP30_LIMIT = 1983702;
 
     // There is no potential to create a duplicate coinbase at block 209,921
     // because this is still before the BIP34 height and so explicit BIP30
@@ -3263,11 +3270,6 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
             return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.nVersion),
                                  strprintf("rejected nVersion=0x%08x block", block.nVersion));
     
-    if (block.nVersion < VERSIONBITS_TOP_BITS && IsWitnessEnabled(pindexPrev, consensusParams))
-        return state.Invalid(false, REJECT_OBSOLETE, strprintf("bad-version(0x%08x)", block.nVersion),
-                                 strprintf("rejected nVersion=0x%08x block", block.nVersion));
-    
-
     return true;
 }
 
