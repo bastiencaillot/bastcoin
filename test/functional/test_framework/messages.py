@@ -580,6 +580,7 @@ class CBlockHeader:
     def calc_sha256(self):
         if self.sha256 is None:
             r = b""
+            hasher.update(r)
             r += struct.pack("<i", self.nVersion)
             r += ser_uint256(self.hashPrevBlock)
             r += ser_uint256(self.hashMerkleRoot)
@@ -588,7 +589,7 @@ class CBlockHeader:
             r += struct.pack("<I", self.nNonce)
             self.sha256 = uint256_from_str(hash256(r))
             self.hash = encode(hash256(r)[::-1], 'hex_codec').decode('ascii')
-            self.blake3 = hasher.digest
+            self.blake3 = hasher.digest()
 
     def rehash(self):
         self.sha256 = None
