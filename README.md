@@ -24,12 +24,18 @@ You can also find [blake3.pdf](blake3.pdf)
 
 ## acknowledgements 👏
 
-Thanks to the 3 Github repositories without which the Bastcoin would never have existed:
--https://github.com/bitcoin/bitcoin
+Thanks to the 4 Github repositories without which the Bastcoin would never have existed:
 
--https://github.com/litecoin-project/litecoin
+-https://github.com/bitcoin/bitcoin (the king, Satoshi Nakamoto I love you)
 
--https://github.com/BLAKE3-team/BLAKE3
+-https://github.com/litecoin-project/litecoin 
+
+-https://github.com/BLAKE3-team/BLAKE3 
+
+-https://github.com/vergecurrency/verge 
+I was able to understand how to use Blake3 as a proof of work function: return HashBlake3(BEGIN(nVersion), END(nNonce));
+
+Indeed Verge is multi-algorithm, and uses Blake2s (the predecessor of Blake3)
 
 ## License 📝
 
