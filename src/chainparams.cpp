@@ -111,10 +111,10 @@ public:
         m_assumed_blockchain_size = 16;
         m_assumed_chain_state_size = 3;
 
-        genesis = CreateGenesisBlock(1630420154, 1381851, 0x1e0ffff0, 1, 50 * COIN); 
+        genesis = CreateGenesisBlock(1630785635, 2003791, 0x1e0ffff0, 1, 50 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000008320ffa4600000008320ffbeb000000000026982e00000008320ff98e0")); 
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000006d080545dbd74308edf7875d9ed8df6ccb05a6b3a177ef85220a90c7279")); 
+        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -142,14 +142,14 @@ public:
 
         checkpointData = {
             {
-               { 0, uint256S("0x0000008320ffa4600000008320ffbeb000000000026982e00000008320ff98e0")},
+               { 0, uint256S("0x000006d080545dbd74308edf7875d9ed8df6ccb05a6b3a177ef85220a90c7279")},
               
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: genesis block
-            /* nTime    */ 1630420154,
+            /* nTime    */ 1630785635,
             /* nTxCount */ 0,
             /* dTxRate  */ 0
         };
@@ -208,10 +208,10 @@ public:
         m_assumed_blockchain_size = 16;
         m_assumed_chain_state_size = 3;
 
-        genesis = CreateGenesisBlock(1630424948, 131026, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1630785728, 2959089, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187"));
+        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -235,13 +235,13 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("000005cecfb44e01a497820125887f1fe62bb578eeaebc71be05170be300d9b9")},
+                {0, uint256S("0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: genesis block
-            /* nTime    */ 1630424948,
+            /* nTime    */ 1630785728,
             /* nTxCount */ 0,
             /* dTxRate  */ 0
         };
@@ -298,10 +298,10 @@ public:
 
         UpdateVersionBitsParametersFromArgs(args);
 
-        genesis = CreateGenesisBlock(1630425043, 694465, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1630785758, 1006431, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfe8f49fd7b2d53d80ecf10b844cc07a2d451c6a87057c52980e02a1ae3ed5c91"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489"));
+        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -312,7 +312,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("0000018e08c6a4bcde60aa9f58433c2fda71d92cc64e51024f44128a0e99f37c")},
+                {0, uint256S("00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489")},
             }
         };
 
