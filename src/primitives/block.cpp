@@ -9,16 +9,10 @@
 #include <tinyformat.h>
 #include <util/strencodings.h>
 #include <crypto/common.h>
-#include <crypto/hashblake3.h>
 
 uint256 CBlockHeader::GetHash() const
 {
-    return SerializeHash(*this);
-}
-
-uint256 CBlockHeader::GetPoWHash() const
-{ 
-  return HashBlake3(BEGIN(nVersion), END(nNonce));
+    return HashBlake3(BEGIN(nVersion), END(nNonce));
 }
 
 std::string CBlock::ToString() const
