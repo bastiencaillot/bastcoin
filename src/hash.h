@@ -13,7 +13,7 @@
 #include <serialize.h>
 #include <uint256.h>
 #include <version.h>
-#include <blake3.h>
+#include <crypto/blake3.h>
 
 #include <vector>
 
