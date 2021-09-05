@@ -48,7 +48,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error Bastcoin cannot be compiled without assertions."
+# error "Bastcoin cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
