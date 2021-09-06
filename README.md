@@ -33,7 +33,6 @@ Thanks to the 4 Github repositories without which the Bastcoin would never have 
 -https://github.com/BLAKE3-team/BLAKE3 
 
 -https://github.com/vergecurrency/verge 
-I was able to understand how to use Blake3 as a proof of work function: return HashBlake3(BEGIN(nVersion), END(nNonce));
 
 Indeed Verge is multi-algorithm, and uses Blake2s (the predecessor of Blake3)
 
