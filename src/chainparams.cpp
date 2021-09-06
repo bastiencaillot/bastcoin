@@ -209,9 +209,9 @@ public:
         m_assumed_chain_state_size = 3;
 
         genesis = CreateGenesisBlock(1630785728, 2959089, 0x1e0ffff0, 1, 50 * COIN);
-        //consensus.hashGenesisBlock = genesis.GetHash();
-        //assert(consensus.hashGenesisBlock == uint256S("0x0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187"));
-        //assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
+        consensus.hashGenesisBlock = genesis.GetHash();
+        assert(consensus.hashGenesisBlock == uint256S("0x0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187"));
+        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -245,9 +245,8 @@ public:
             /* nTxCount */ 0,
             /* dTxRate  */ 0
         };
-    
 
-        /* enable fallback fee on testnet */  
+        /* enable fallback fee on testnet */
         m_fallback_fee_enabled = true;
     }
 };
@@ -300,9 +299,9 @@ public:
         UpdateVersionBitsParametersFromArgs(args);
 
         genesis = CreateGenesisBlock(1630785758, 1006431, 0x1e0ffff0, 1, 50 * COIN);
-        //consensus.hashGenesisBlock = genesis.GetHash();
-        //assert(consensus.hashGenesisBlock == uint256S("0x00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489"));
-        //assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
+        consensus.hashGenesisBlock = genesis.GetHash();
+        assert(consensus.hashGenesisBlock == uint256S("0x00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489"));
+        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -330,7 +329,6 @@ public:
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
         bech32_hrp = "rbas";
-        
 
         /* enable fallback fee on regtest */
         m_fallback_fee_enabled = true;
