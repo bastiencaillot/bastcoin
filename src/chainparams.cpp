@@ -165,7 +165,6 @@ public:
 class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
-        /*
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 70000;
         consensus.BIP16Height = 0; // always enforce P2SH BIP16 on testnet, like Litecoin
@@ -210,9 +209,9 @@ public:
         m_assumed_chain_state_size = 3;
 
         genesis = CreateGenesisBlock(1630785728, 2959089, 0x1e0ffff0, 1, 50 * COIN);
-        consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
+        //consensus.hashGenesisBlock = genesis.GetHash();
+        //assert(consensus.hashGenesisBlock == uint256S("0x0000045481434fea2785555d95f63a4baa57ab10f47836229d0e01478cb30187"));
+        //assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -248,10 +247,8 @@ public:
         };
     
 
-        /* enable fallback fee on testnet */
-        /*    
+        /* enable fallback fee on testnet */  
         m_fallback_fee_enabled = true;
-        */
     }
 };
 
@@ -261,7 +258,6 @@ public:
 class CRegTestParams : public CChainParams {
 public:
     explicit CRegTestParams(const ArgsManager& args) {
-        /*
         strNetworkID = "regtest";
         consensus.nSubsidyHalvingInterval = 150;
         consensus.BIP16Height = 0;
@@ -304,9 +300,9 @@ public:
         UpdateVersionBitsParametersFromArgs(args);
 
         genesis = CreateGenesisBlock(1630785758, 1006431, 0x1e0ffff0, 1, 50 * COIN);
-        consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489"));
-        assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
+        //consensus.hashGenesisBlock = genesis.GetHash();
+        //assert(consensus.hashGenesisBlock == uint256S("0x00000bb09ff9065c97ac0ad7610f992b276f5ed5700d9ba70c9f54781d375489"));
+        //assert(genesis.hashMerkleRoot == uint256S("0xfc72045b0d42633d33d2577e03d1ebb4275b55f7a1062db710e7a2125713baad"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -335,12 +331,9 @@ public:
 
         bech32_hrp = "rbas";
         
-        */
 
         /* enable fallback fee on regtest */
-        /*
         m_fallback_fee_enabled = true;
-        */
     }
 
     /**
