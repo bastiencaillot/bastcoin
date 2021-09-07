@@ -9,10 +9,17 @@
 #include <tinyformat.h>
 #include <util/strencodings.h>
 #include <crypto/common.h>
+#include <crypto/blake3.h>
 
 uint256 CBlockHeader::GetHash() const
 {
-    return HashBlake3(BEGIN(nVersion), END(nNonce));
+    // Initialize the hasher.
+  blake3_hasher hasher;
+  blake3_hasher_init(&hasher);
+  
+    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
+  uint8_t output[BLAKE3_OUT_LEN];
+  blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
 }
 
 std::string CBlock::ToString() const
