@@ -135,13 +135,9 @@ public:
 
     // invalidates the object
     uint256 GetHash() {
-        // Initialize the hasher.
-        blake3_hasher hasher;
-        blake3_hasher_init(&hasher);
-  
-       // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
-       uint8_t output[BLAKE3_OUT_LEN];
-       blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+        uint256 result;
+        ctx.Finalize((unsigned char*)&result);
+        return result;
     }
 
     /**
@@ -208,5 +204,22 @@ uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL
 unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
 
 void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
+
+/* ----------- Bastcoin Hash ------------------------------------------------ */
+template<typename T1>
+inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
+{
+    static unsigned char pblank[1];
+  
+    //Initialize a blake3_hasher in the key derivation mode
+    blake3_hasher hasher;
+    blake3_hasher_init(&hasher);
+  
+    blake3_hasher_update( &hasher, (pbegin == pend ? pblank : (unsigned char*)&pbegin[0]), (pend - pbegin) * sizeof(pbegin[0]) );
+  
+    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
+    uint8_t output[BLAKE3_OUT_LEN];
+    blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+}
 
 #endif // BITCOIN_HASH_H
