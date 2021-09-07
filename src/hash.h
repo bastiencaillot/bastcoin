@@ -219,7 +219,7 @@ inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
   
     // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
     uint8_t output[BLAKE3_OUT_LEN];
-    blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+    blake3_hasher_finalize(&hasher, (unsigned char*)&output, BLAKE3_OUT_LEN);
 }
 
 #endif // BITCOIN_HASH_H
