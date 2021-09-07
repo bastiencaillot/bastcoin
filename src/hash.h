@@ -222,7 +222,7 @@ inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
     uint8_t output[BLAKE3_OUT_LEN];
     blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
     
-    return;
+    return 0;
     
 }
 
