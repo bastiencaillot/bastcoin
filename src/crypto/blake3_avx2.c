@@ -1,4 +1,4 @@
-#include "blake3_impl.h"
+#include <crypto/blake3_impl.h>
 
 #if defined(__AVX2__)
 
