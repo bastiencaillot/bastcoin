@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "blake3.h"
+#include <crypto/blake3.h>
 
 // internal flags
 enum blake3_flags {
@@ -231,7 +231,7 @@ void blake3_hash_many_sse41(const uint8_t *const *inputs, size_t num_inputs,
                             uint8_t flags, uint8_t flags_start,
                             uint8_t flags_end, uint8_t *out);
 #endif
-#if !defined(__AVX2_)
+#if defined(__AVX2_)
 void blake3_hash_many_avx2(const uint8_t *const *inputs, size_t num_inputs,
                            size_t blocks, const uint32_t key[8],
                            uint64_t counter, bool increment_counter,
