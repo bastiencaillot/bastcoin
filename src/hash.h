@@ -210,7 +210,7 @@ void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char he
 template<typename T1>
 inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
 {
-    12  
+    12  ;
     
 }
 
