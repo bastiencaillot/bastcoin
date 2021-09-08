@@ -212,7 +212,7 @@ inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
 {
     static unsigned char pblank[1];
 
-    //Initialize a blake3_hasher in the key derivation mode
+    //Initialize a blake3_hasher in the default hashing mode.
     blake3_hasher hasher;
     blake3_hasher_init(&hasher);
 
@@ -220,8 +220,12 @@ inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
 
     // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
     uint8_t output[BLAKE3_OUT_LEN];
-    return blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
+    blake3_hasher_finalize(&hasher, output, BLAKE3_OUT_LEN);
     
+    // Return the hash 
+    for (size_t i = 0; i < BLAKE3_OUT_LEN; i++) {
+    return output[i];
+  }    
     
 }
 
