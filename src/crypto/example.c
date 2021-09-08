@@ -1,4 +1,4 @@
-#include "blake3.h"
+#include <crypto/blake3.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
