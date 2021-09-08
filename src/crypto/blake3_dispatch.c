@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "blake3_impl.h"
+#include <crypto/blake3_impl.h>
 
 #if defined(IS_X86)
 #if defined(_MSC_VER)
