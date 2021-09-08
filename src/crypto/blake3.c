@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "blake3.h"
-#include "blake3_impl.h"
+#include <crypto/blake3.h>
+#include <crypto/blake3_impl.h"
 
 const char *blake3_version(void) { return BLAKE3_VERSION_STRING; }
 
