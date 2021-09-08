@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "blake3.h"
-#include "blake3_impl.h"
+#include <crypto/blake3.h>
+#include <crypto/blake3_impl.h>
 
 #define HASH_MODE 0
 #define KEYED_HASH_MODE 1
