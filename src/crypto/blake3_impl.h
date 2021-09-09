@@ -257,7 +257,7 @@ void blake3_hash_many_avx512(const uint8_t *const *inputs, size_t num_inputs,
 #endif
 #endif
 
-#if __ARM_NEON
+#ifdef __ARM_NEON
 void blake3_hash_many_neon(const uint8_t *const *inputs, size_t num_inputs,
                            size_t blocks, const uint32_t key[8],
                            uint64_t counter, bool increment_counter,
