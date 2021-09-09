@@ -232,7 +232,7 @@ void blake3_hash_many(const uint8_t *const *inputs, size_t num_inputs,
 #endif
 #endif
 
-#if __ARM_NEON
+#ifdef __ARM_NEON
   blake3_hash_many_neon(inputs, num_inputs, blocks, key, counter,
                         increment_counter, flags, flags_start, flags_end, out);
   return;
@@ -269,7 +269,7 @@ size_t blake3_simd_degree(void) {
   }
 #endif
 #endif
-#if __ARM_NEON
+#ifdef __ARM_NEON
   return 4;
 #endif
   return 1;
