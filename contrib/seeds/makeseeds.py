@@ -11,7 +11,7 @@ import sys
 import dns.resolver
 import collections
 
-NSEEDS=512
+NSEEDS=0
 
 MAX_SEEDS_PER_ASN=2
 
