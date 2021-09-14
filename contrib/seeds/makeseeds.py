@@ -11,9 +11,26 @@ import sys
 import dns.resolver
 import collections
 
+NSEEDS=512
+
+MAX_SEEDS_PER_ASN=2
+
+MIN_BLOCKS = 337600
+
+# These are hosts that have been observed to be behaving strangely (e.g.
+# aggressively connecting to every node).
+SUSPICIOUS_HOSTS = {
+    "130.211.129.106", "178.63.107.226",
+    "83.81.130.26", "88.198.17.7", "148.251.238.178", "176.9.46.6",
+    "54.173.72.127", "54.174.10.182", "54.183.64.54", "54.194.231.211",
+    "54.66.214.167", "54.66.220.137", "54.67.33.14", "54.77.251.214",
+    "54.94.195.96", "54.94.200.247"
+}
+
 PATTERN_IPV4 = re.compile(r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
 PATTERN_IPV6 = re.compile(r"^\[([0-9a-z:]+)\]:(\d+)$")
 PATTERN_ONION = re.compile(r"^([abcdefghijklmnopqrstuvwxyz234567]{16}\.onion):(\d+)$")
+PATTERN_AGENT = re.compile(r"^(/Satoshi:0.14.(0|1|2|99)/|/Satoshi:0.15.(0|1|2|99)|/Satoshi:0.16.(0|1|2|99)/)$")
 
 def parseline(line):
     sline = line.split()
@@ -124,6 +141,27 @@ def main():
     lines = sys.stdin.readlines()
     ips = [parseline(line) for line in lines]
 
+    # Skip entries with valid address.
+    ips = [ip for ip in ips if ip is not None]
+    # Skip entries from suspicious hosts.
+    ips = [ip for ip in ips if ip['ip'] not in SUSPICIOUS_HOSTS]
+    # Enforce minimal number of blocks.
+    ips = [ip for ip in ips if ip['blocks'] >= MIN_BLOCKS]
+    # Require service bit 1.
+    ips = [ip for ip in ips if (ip['service'] & 1) == 1]
+    # Require at least 50% 30-day uptime.
+    ips = [ip for ip in ips if ip['uptime'] > 50]
+    # Require a known and recent user agent.
+    ips = [ip for ip in ips if PATTERN_AGENT.match(ip['agent'])]
+    # Sort by availability (and use last success as tie breaker)
+    ips.sort(key=lambda x: (x['uptime'], x['lastsuccess'], x['ip']), reverse=True)
+    # Filter out hosts with multiple bitcoin ports, these are likely abusive
+    ips = filtermultiport(ips)
+    # Look up ASNs and limit results, both per ASN and globally.
+    ips = filterbyasn(ips, MAX_SEEDS_PER_ASN, NSEEDS)
+    # Sort the results by IP address (for deterministic output).
+    ips.sort(key=lambda x: (x['net'], x['sortkey']))
+
     for ip in ips:
         if ip['net'] == 'ipv6':
             print('[%s]:%i' % (ip['ip'], ip['port']))
@@ -132,3 +170,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+    
