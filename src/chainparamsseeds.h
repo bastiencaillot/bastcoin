@@ -8,13 +8,12 @@
  * IPv4 as well as onion addresses are wrapped inside an IPv6 address accordingly.
  */
 static SeedSpec6 pnSeed6_main[] = {
+    {{0x2a,0x01,0xcb,0x00,0x08,0xd5,0x61,0x00,0x64,0x7c,0x23,0x93,0x5a,0xf5,0x26,0x66}, 7333}
     
 };
 
 static SeedSpec6 pnSeed6_test[] = {
     
 };
-
-// For now, as the bastcoin is only in its infancy, the whole is blank, go into doc if you want to see the same file but for bitcoin
 
 #endif // BITCOIN_CHAINPARAMSSEEDS_H
