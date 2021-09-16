@@ -1,5 +1,6 @@
 ---
 name: "bastcoin-dmg-signer"
+distro: "ubuntu"
 suites:
 - "bionic"
 architectures:
