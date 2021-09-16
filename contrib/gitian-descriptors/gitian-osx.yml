@@ -1,5 +1,6 @@
 ---
 name: "bastcoin-osx-0.18"
+distro: "ubuntu"
 enable_cache: true
 suites:
 - "bionic"
