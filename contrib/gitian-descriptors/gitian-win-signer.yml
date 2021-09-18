@@ -1,6 +1,5 @@
 ---
 name: "bastcoin-win-signer"
-distro: "ubuntu"
 suites:
 - "bionic"
 architectures:
