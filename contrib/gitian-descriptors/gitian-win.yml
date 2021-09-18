@@ -1,7 +1,6 @@
 ---
 name: "bastcoin-win-0.18"
 enable_cache: true
-distro: "ubuntu"
 suites:
 - "bionic"
 architectures:
