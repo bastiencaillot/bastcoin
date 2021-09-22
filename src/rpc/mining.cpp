@@ -978,7 +978,7 @@ UniValue getgenerate(const JSONRPCRequest& request)
         throw std::runtime_error(
             "getgenerate\n"
             "\nReturn if the server is set to generate coins or not. The default is false.\n"
-            "It is set with the command line argument -gen (or " + std::string(RAVEN_CONF_FILENAME) + " setting gen)\n"
+            "It is set with the command line argument -gen (or " + std::string(BITCOIN_CONF_FILENAME) + " setting gen)\n"
             "It can also be set with the setgenerate call.\n"
             "\nResult\n"
             "true|false      (boolean) If the server is set to generate coins or not\n"
@@ -1033,7 +1033,7 @@ UniValue setgenerate(const JSONRPCRequest& request)
     gArgs.SoftSetArg("-genproclimit", itostr(nGenProcLimit));
     //mapArgs["-gen"] = (fGenerate ? "1" : "0");
     //mapArgs ["-genproclimit"] = itostr(nGenProcLimit);
-    int numCores = GenerateRavens(fGenerate, nGenProcLimit, Params());
+    int numCores = GenerateBitcoins(fGenerate, nGenProcLimit, Params());
 
     nGenProcLimit = nGenProcLimit >= 0 ? nGenProcLimit : numCores;
     std::string msg = std::to_string(nGenProcLimit) + " of " + std::to_string(numCores);
