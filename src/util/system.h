@@ -384,6 +384,8 @@ private:
     std::vector<std::string> args;
 };
 #endif
+    
+void SetThreadPriority(int nPriority);
 
 } // namespace util
 
