@@ -29,6 +29,9 @@
 #include <queue>
 #include <utility>
 
+#include <boost/thread.hpp>
+#include <wallet/wallet.h>
+
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
 {
     int64_t nOldTime = pblock->nTime;
