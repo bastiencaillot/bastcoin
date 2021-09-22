@@ -212,7 +212,6 @@ void Shutdown(InitInterfaces& interfaces)
     for (const auto& client : interfaces.chain_clients) {
         client->flush();
     }
-    GenerateBitcoins(false, 0, Params(), *g_connman);
     StopMapPort();
 
     // Because these depend on each-other, we make sure that neither can be
@@ -370,8 +369,6 @@ void SetupServerArgs()
         // GUI args. These will be overwritten by SetupUIArgs for the GUI
         "-allowselfsignedrootcertificates", "-choosedatadir", "-lang=<lang>", "-min", "-resetguisettings", "-rootcertificates=<file>", "-splash", "-uiplatform"};
 
-    gArgs.AddArg("-gen", strprintf(_("Generate coins (default: %u)"), DEFAULT_GENERATE));
-    gArgs.AddArg("-genproclimit=<n>", strprintf(_("Set the number of threads for coin generation if enabled (-1 = all cores, default: %d)"), DEFAULT_GENERATE_THREADS));
     gArgs.AddArg("-version", "Print version and exit", false, OptionsCategory::OPTIONS);
     gArgs.AddArg("-alertnotify=<cmd>", "Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)", false, OptionsCategory::OPTIONS);
     gArgs.AddArg("-assumevalid=<hex>", strprintf("If this block is in the chain assume that it and its ancestors are valid and potentially skip their script verification (0 to verify all, default: %s, testnet: %s)", defaultChainParams->GetConsensus().defaultAssumeValid.GetHex(), testnetChainParams->GetConsensus().defaultAssumeValid.GetHex()), false, OptionsCategory::OPTIONS);
@@ -1801,9 +1798,6 @@ bool AppInitMain(InitInterfaces& interfaces)
     if (!g_connman->Start(scheduler, connOptions)) {
         return false;
     }
-    
-    // Generate coins in the background
-    GenerateBitcoins(GetBoolArg("-gen", DEFAULT_GENERATE), GetArg("-genproclimit", DEFAULT_GENERATE_THREADS), chainparams, connman);
 
     // ********************************************************* Step 13: finished
 
