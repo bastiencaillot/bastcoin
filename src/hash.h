@@ -68,6 +68,24 @@ public:
     }
 };
 
+template<typename T1>
+inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
+{
+    static unsigned char pblank[1];
+
+    //Initialize a blake3_hasher in the default hashing mode.
+    blake3_hasher hasher;
+    blake3_hasher_init(&hasher);
+
+    blake3_hasher_update( &hasher, (pbegin == pend ? pblank : (unsigned char*)&pbegin[0]), (pend - pbegin) * sizeof(pbegin[0]) );
+
+    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
+    uint256 hash1;
+    blake3_hasher_finalize(&hasher, (unsigned char*)&hash1, BLAKE3_OUT_LEN);
+    return hash1;
+
+}
+
 /** Compute the 256-bit hash of an object. */
 template<typename T1>
 inline uint256 Hash(const T1 pbegin, const T1 pend)
