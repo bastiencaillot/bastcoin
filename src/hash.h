@@ -120,6 +120,7 @@ class CHashWriter
 {
 private:
     CHash256 ctx;
+    blake3_hasher hasher;
 
     const int nType;
     const int nVersion;
@@ -129,15 +130,18 @@ public:
 
     int GetType() const { return nType; }
     int GetVersion() const { return nVersion; }
+    
+     blake3_hasher_init(&hasher);
 
     void write(const char *pch, size_t size) {
-        ctx.Write((const unsigned char*)pch, size);
+         blake3_hasher_update( &hasher, (const unsigned char*)pch, size);
     }
 
     // invalidates the object
     uint256 GetHash() {
+        // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
         uint256 result;
-        ctx.Finalize((unsigned char*)&result);
+        blake3_hasher_finalize(&hasher, (unsigned char*)&result, BLAKE3_OUT_LEN);
         return result;
     }
 
@@ -145,8 +149,7 @@ public:
      * Returns the first 64 bits from the resulting hash.
      */
     inline uint64_t GetCheapHash() {
-        unsigned char result[CHash256::OUTPUT_SIZE];
-        ctx.Finalize(result);
+        uint256 result = GetHash();
         return ReadLE64(result);
     }
 
@@ -205,24 +208,5 @@ uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL
 unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
 
 void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
-
-/* ----------- Bastcoin Hash ------------------------------------------------ */
-template<typename T1>
-inline uint256 HashBlake3(const T1 pbegin, const T1 pend)
-{
-    static unsigned char pblank[1];
-
-    //Initialize a blake3_hasher in the default hashing mode.
-    blake3_hasher hasher;
-    blake3_hasher_init(&hasher);
-
-    blake3_hasher_update( &hasher, (pbegin == pend ? pblank : (unsigned char*)&pbegin[0]), (pend - pbegin) * sizeof(pbegin[0]) );
-
-    // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
-    uint256 hash1;
-    blake3_hasher_finalize(&hasher, (unsigned char*)&hash1, BLAKE3_OUT_LEN);
-    return hash1;
-    
-}
 
 #endif // BITCOIN_HASH_H
