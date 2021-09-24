@@ -138,7 +138,6 @@ class CHashWriter
 {
 private:
     CHash256 ctx;
-    blake3_hasher hasher;
 
     const int nType;
     const int nVersion;
@@ -148,15 +147,23 @@ public:
 
     int GetType() const { return nType; }
     int GetVersion() const { return nVersion; }
-    
-     blake3_hasher_init(&hasher);
 
     void write(const char *pch, size_t size) {
-         blake3_hasher_update( &hasher, (const unsigned char*)pch, size);
+        
+        //Initialize a blake3_hasher in the default hashing mode.
+        blake3_hasher hasher;
+        blake3_hasher_init(&hasher);
+        
+        blake3_hasher_update( &hasher, (const unsigned char*)pch, size);
     }
 
     // invalidates the object
     uint256 GetHash() {
+        
+        //Initialize a blake3_hasher in the default hashing mode.
+        blake3_hasher hasher;
+        blake3_hasher_init(&hasher);
+        
         // Finalize the hash. BLAKE3_OUT_LEN is the default output length, 32 bytes.
         uint256 result;
         blake3_hasher_finalize(&hasher, (unsigned char*)&result, BLAKE3_OUT_LEN);
@@ -168,7 +175,7 @@ public:
      */
     inline uint64_t GetCheapHash() {
         uint256 result = GetHash();
-        return ReadLE64(result);
+        return ReadLE64(result.begin());
     }
 
     template<typename T>
