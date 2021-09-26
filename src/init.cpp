@@ -34,6 +34,7 @@
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/blockchain.h>
+#include <rpc/mining.h>
 #include <rpc/util.h>
 #include <script/standard.h>
 #include <script/sigcache.h>
@@ -212,6 +213,7 @@ void Shutdown(InitInterfaces& interfaces)
     for (const auto& client : interfaces.chain_clients) {
         client->flush();
     }
+    GenerateBastcoins(false, 0, Params());
     StopMapPort();
 
     // Because these depend on each-other, we make sure that neither can be
@@ -1269,6 +1271,10 @@ bool AppInitMain(InitInterfaces& interfaces)
 
     InitSignatureCache();
     InitScriptExecutionCache();
+    
+    bool fGenerate = gArgs.GetBoolArg("-regtest", false) ? false : DEFAULT_GENERATE;
+    // Generate coins in the background
+    GenerateBastcoins(fGenerate, gArgs.GetArg("-genproclimit", DEFAULT_GENERATE_THREADS), chainparams);
 
     LogPrintf("Using %u threads for script verification\n", nScriptCheckThreads);
     if (nScriptCheckThreads) {
