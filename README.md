@@ -24,7 +24,7 @@ You can also find [blake3.pdf](blake3.pdf)
 
 ## acknowledgements 👏
 
-Thanks to the 4 Github repositories without which the Bastcoin would never have existed:
+Thanks to the 5 Github repositories without which the Bastcoin would never have existed:
 
 -https://github.com/bitcoin/bitcoin (the king, Satoshi Nakamoto I love you)
 
@@ -35,6 +35,8 @@ Thanks to the 4 Github repositories without which the Bastcoin would never have 
 -https://github.com/vergecurrency/verge 
 
 Indeed Verge is multi-algorithm, and uses Blake2s (the predecessor of Blake3)
+
+-https://github.com/RavenProject/Ravencoin for the built-in CPU miner
 
 ## License 📝
 
