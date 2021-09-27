@@ -35,7 +35,7 @@
 #include <queue>
 #include <utility>
 
-extern std::vector<CWallet *> vpwallets;
+extern  std::vector<std::shared_ptr<CWallet>> vpwallets;
 
 uint64_t nMiningTimeStart = 0;
 uint64_t nHashesPerSec = 0;
