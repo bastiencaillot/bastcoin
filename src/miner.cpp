@@ -6,6 +6,7 @@
 #include <miner.h>
 
 #include <wallet/wallet.h>
+#include <wallet/rpcwallet.h>
 
 
 #include <boost/thread.hpp>
@@ -34,7 +35,7 @@
 #include <queue>
 #include <utility>
 
-extern std::vector<CWallet*> vpwallets;
+extern std::vector<CWallet *> vpwallets;
 
 uint64_t nMiningTimeStart = 0;
 uint64_t nHashesPerSec = 0;
