@@ -39,6 +39,8 @@ uint64_t nMiningTimeStart = 0;
 uint64_t nHashesPerSec = 0;
 uint64_t nHashesDone = 0;
 
+pWallet =  GetWallet(wallet_name);
+
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
 {
     int64_t nOldTime = pblock->nTime;
@@ -488,9 +490,6 @@ void static BastcoinMiner(const CChainParams& chainparams)
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
-
-
-    CWallet *  pWallet = GetWallet();
 
     if (!EnsureWalletIsAvailable(pWallet, false)) {
         LogPrintf("BastcoinMiner -- Wallet not available\n");
