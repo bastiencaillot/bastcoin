@@ -63,6 +63,7 @@ bool error(const char* fmt, const Args&... args)
     return false;
 }
 
+void SetThreadPriority(int nPriority);
 void PrintExceptionContinue(const std::exception *pex, const char* pszThread);
 bool FileCommit(FILE *file);
 bool TruncateFile(FILE *file, unsigned int length);
