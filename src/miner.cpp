@@ -481,7 +481,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-void static BastcoinMiner(const CChainParams& chainparams, CWallet * const pwallet)
+void static BastcoinMiner(const CChainParams& chainparams, const CWallet* pwallet)
 {
     
     LogPrintf("BastcoinMiner -- started\n");
