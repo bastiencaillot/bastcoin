@@ -490,17 +490,17 @@ void static BastcoinMiner(const CChainParams& chainparams)
 
     unsigned int nExtraNonce = 0;
 
-    if (!EnsureWalletIsAvailable(wallet, false)) {
+    if (!EnsureWalletIsAvailable(CWallet, false)) {
         LogPrintf("BastcoinMiner -- Wallet not available\n");
     }
 
-    if (wallet == NULL)
+    if (CWallet == NULL)
         LogPrintf("pWallet is NULL\n");
 
 
     std::shared_ptr<CReserveScript> coinbaseScript;
 
-    pWallet->GetScriptForMining(coinbaseScript);
+    CWallet->GetScriptForMining(coinbaseScript);
 
     //GetMainSignals().ScriptForMining(coinbaseScript);
 
