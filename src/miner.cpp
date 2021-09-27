@@ -35,8 +35,6 @@
 #include <queue>
 #include <utility>
 
-extern  std::vector<std::shared_ptr<CWallet>> vpwallets;
-
 uint64_t nMiningTimeStart = 0;
 uint64_t nHashesPerSec = 0;
 uint64_t nHashesDone = 0;
@@ -483,16 +481,6 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-CWallet *GetFirstWallet() {
-    while(vpwallets.size() == 0){
-        MilliSleep(100);
-
-    }
-    if (vpwallets.size() == 0)
-        return(NULL);
-    return(vpwallets[0]);
-}
-
 void static BastcoinMiner(const CChainParams& chainparams)
 {
     LogPrintf("BastcoinMiner -- started\n");
@@ -502,7 +490,7 @@ void static BastcoinMiner(const CChainParams& chainparams)
     unsigned int nExtraNonce = 0;
 
 
-    CWallet *  pWallet = GetFirstWallet();
+    CWallet *  pWallet = GetWallet();
 
     if (!EnsureWalletIsAvailable(pWallet, false)) {
         LogPrintf("BastcoinMiner -- Wallet not available\n");
