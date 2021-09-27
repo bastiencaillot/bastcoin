@@ -121,8 +121,10 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("seed.bastcoin.org"); 
-        vSeeds.emplace_back("dnsseed.bastiencaillot"); 
+        //vSeeds.emplace_back("seed.bastcoin.org"); 
+        //vSeeds.emplace_back("dnsseed.bastiencaillot"); 
+        
+        vSeeds.emplace_back("bastiencaillot.bastcoin.org"); 
 
         //https://en.bitcoin.it/wiki/List_of_address_prefixes
         
@@ -216,8 +218,8 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.emplace_back("seed.bastcoin.org"); 
-        vSeeds.emplace_back("dnsseed.bastiencaillot");
+        //vSeeds.emplace_back("seed.bastcoin.org"); 
+        //vSeeds.emplace_back("dnsseed.bastiencaillot");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
