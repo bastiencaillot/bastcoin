@@ -569,7 +569,7 @@ void static BastcoinMiner(const CChainParams& chainparams)
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
             LogPrintf("BastcoinMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
-                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+                ::GetSerializeSize(*pblock, PROTOCOL_VERSION));
 
             //
             // Search
