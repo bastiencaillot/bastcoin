@@ -493,9 +493,7 @@ static void BastcoinMiner(const CChainParams& chainparams)
 
     std::shared_ptr<CReserveScript> coinbaseScript;
 
-    GetScriptForMining(coinbaseScript);
-
-    //GetMainSignals().ScriptForMining(coinbaseScript);
+    GetMainSignals().ScriptForMining(coinbaseScript);
 
     if (!coinbaseScript)
         LogPrintf("coinbaseScript is NULL\n");
