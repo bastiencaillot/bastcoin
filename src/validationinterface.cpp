@@ -106,15 +106,13 @@ void RegisterValidationInterface(CValidationInterface* pwalletIn) {
     conns.Broadcast = g_signals.m_internals->Broadcast.connect(std::bind(&CValidationInterface::ResendWalletTransactions, pwalletIn, std::placeholders::_1, std::placeholders::_2));
     conns.BlockChecked = g_signals.m_internals->BlockChecked.connect(std::bind(&CValidationInterface::BlockChecked, pwalletIn, std::placeholders::_1, std::placeholders::_2));
     conns.NewPoWValidBlock = g_signals.m_internals->NewPoWValidBlock.connect(std::bind(&CValidationInterface::NewPoWValidBlock, pwalletIn, std::placeholders::_1, std::placeholders::_2));
-    g_signals.m_internals->BlockFound.connect(boost::bind(&CValidationInterface::BlockFound, pwalletIn, _1));
-    g_signals.m_internals->ScriptForMining.connect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, _1));
+    conns.BlockFound = g_signals.m_internals->BlockFound.connect(boost::bind(&CValidationInterface::BlockFound, pwalletIn, _1));
+    conns.ScriptForMining = g_signals.m_internals->ScriptForMining.connect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, _1));
 }
 
 void UnregisterValidationInterface(CValidationInterface* pwalletIn) {
     if (g_signals.m_internals) {
         g_signals.m_internals->m_connMainSignals.erase(pwalletIn);
-        g_signals.m_internals->BlockFound.disconnect(boost::bind(&CValidationInterface::BlockFound, pwalletIn, _1));
-        g_signals.m_internals->ScriptForMining.disconnect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, _1));
     }
 }
 
@@ -123,8 +121,6 @@ void UnregisterAllValidationInterfaces() {
         return;
     }
     g_signals.m_internals->m_connMainSignals.clear();
-    g_signals.m_internals->BlockFound.disconnect_all_slots();
-    g_signals.m_internals->ScriptForMining.disconnect_all_slots();
 }
 
 void CallFunctionInValidationInterfaceQueue(std::function<void ()> func) {
@@ -197,4 +193,8 @@ void CMainSignals::NewPoWValidBlock(const CBlockIndex *pindex, const std::shared
 
 void CMainSignals::BlockFound(const uint256 &hash) {
     m_internals->BlockFound(hash);
+}
+
+void CMainSignals::ScriptForMining(std::shared_ptr<CReserveScript> coinbaseScript) {
+    m_internals->ScriptForMining(coinbaseScript);
 }
