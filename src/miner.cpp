@@ -39,9 +39,6 @@ uint64_t nMiningTimeStart = 0;
 uint64_t nHashesPerSec = 0;
 uint64_t nHashesDone = 0;
 
-std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
-    CWallet* const pwallet = wallet.get();
-
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
 {
     int64_t nOldTime = pblock->nTime;
@@ -484,8 +481,11 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-void static BastcoinMiner(const CChainParams& chainparams)
+void BastcoinMiner(const CChainParams& chainparams, std::shared_ptr<CWallet>&& wallet)
 {
+    
+    CWallet* pwallet = wallet.get();
+    
     LogPrintf("BastcoinMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("bastcoin-miner");
