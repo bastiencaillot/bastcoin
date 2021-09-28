@@ -481,7 +481,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-void static BastcoinMiner(const CChainParams& chainparams)
+void static BastcoinMiner(const CChainParams& chainparams, const JSONRPCRequest& request)
 {
     
     std::shared_ptr<CWallet> const wallet = GetWalletForJSONRPCRequest(request);
