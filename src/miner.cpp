@@ -483,8 +483,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 
 static void BastcoinMiner(const CChainParams& chainparams)
 {
-    std::string wallet_name;
-    std::shared_ptr<CWallet> pwallet = GetWallet(wallet_name);
+    CWallet* const pwallet = wallet.get();
     
     LogPrintf("BastcoinMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
