@@ -483,7 +483,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 
 static void BastcoinMiner(const CChainParams& chainparams)
 {
-    CWallet* const pwallet = wallet.get();
+  for (const std::shared_ptr<CWallet>& pwallet : GetWallets()) {
     
     LogPrintf("BastcoinMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -626,6 +626,7 @@ static void BastcoinMiner(const CChainParams& chainparams)
         LogPrintf("BastcoinMiner -- runtime error: %s\n", e.what());
         return;
     }
+  }
 }
 
 int GenerateBastcoins(bool fGenerate, int nThreads, const CChainParams& chainparams)
