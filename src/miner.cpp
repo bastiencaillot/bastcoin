@@ -490,10 +490,6 @@ static void BastcoinMiner(const CChainParams& chainparams)
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
-    
-    if (!EnsureWalletIsAvailable(pwallet, false)) {
-        LogPrintf("BastcoinMiner -- Wallet not available\n");
-    }
 
     if (pwallet == NULL)
         LogPrintf("pWallet is NULL\n");
