@@ -484,16 +484,24 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 static void BastcoinMiner(const CChainParams& chainparams)
 {
     
+    std::shared_ptr<CWallet> pwallet = GetWallet(wallet_name);
+    
     LogPrintf("BastcoinMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
+    
+    if (!EnsureWalletIsAvailable(pwallet, false)) {
+        LogPrintf("BastcoinMiner -- Wallet not available\n");
+    }
 
+    if (pwallet == NULL)
+        LogPrintf("pWallet is NULL\n");
 
     std::shared_ptr<CReserveScript> coinbaseScript;
 
-    GetMainSignals().ScriptForMining(coinbaseScript);
+    pwallet->GetScriptForMining(coinbaseScript);
 
     if (!coinbaseScript)
         LogPrintf("coinbaseScript is NULL\n");
