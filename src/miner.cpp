@@ -481,7 +481,7 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-static void BastcoinMiner(const CChainParams& chainparams, std::shared_ptr<CWallet>&& wallet)
+static void BastcoinMiner(const CChainParams& chainparams)
 {
     
     LogPrintf("BastcoinMiner -- started\n");
