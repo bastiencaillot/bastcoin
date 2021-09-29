@@ -213,7 +213,7 @@ void Shutdown(InitInterfaces& interfaces)
     for (const auto& client : interfaces.chain_clients) {
         client->flush();
     }
-    GenerateBastcoins(false, 0, GetParams());
+    GenerateBastcoins(false, 0, Params());
     StopMapPort();
 
     // Because these depend on each-other, we make sure that neither can be
