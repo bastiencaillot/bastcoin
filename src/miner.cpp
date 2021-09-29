@@ -481,25 +481,43 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-static void BastcoinMiner(const CChainParams& chainparams)
+CWallet* GetFirstWallet() {
+    LOCK(cs_wallets);
+    while (vpwallets.size() == 0) {
+        MilliSleep(100);
+    }
+    if (vpwallets.size() == 0)
+        return nullptr;
+    return vpwallets[0].get();
+}
+
+void static BastcoinMiner(const CChainParams& chainparams)
 {
-  for (const std::shared_ptr<CWallet>& pwallet : GetWallets()) {
-    
-    LogPrintf("BastcoinMiner -- started\n");
+    LogPrintf("Bastcoin Miner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
 
-    if (pwallet == NULL)
-        LogPrintf("pWallet is NULL\n");
+
+    CWallet* pWallet = GetFirstWallet();
+
+    if (!EnsureWalletIsAvailable(pWallet, false)) {
+        LogPrintf("Bastcoin Miner -- Wallet not available\n");
+    }
+
+    if (pWallet == nullptr)
+        LogPrintf("pWallet is null\n");
+
 
     std::shared_ptr<CReserveScript> coinbaseScript;
 
-    pwallet->GetScriptForMining(coinbaseScript);
+    pWallet->GetScriptForMining(coinbaseScript);
+
+    // GetMainSignals().ScriptForMining(coinbaseScript);
 
     if (!coinbaseScript)
-        LogPrintf("coinbaseScript is NULL\n");
+        LogPrintf("coinbaseScript is null\n");
 
     if (coinbaseScript->reserveScript.empty())
         LogPrintf("coinbaseScript is empty\n");
@@ -507,7 +525,7 @@ static void BastcoinMiner(const CChainParams& chainparams)
     try {
         // Throw an error if no script was provided.  This can happen
         // due to some internal error but also if the keypool is empty.
-        // In the latter case, already the pointer is NULL.
+        // In the latter case, already the pointer is null.
         if (!coinbaseScript || coinbaseScript->reserveScript.empty())
         {
             throw std::runtime_error("No coinbase script available (mining requires a wallet)");
@@ -542,13 +560,13 @@ static void BastcoinMiner(const CChainParams& chainparams)
 
             if (!pblocktemplate.get())
             {
-                LogPrintf("BastcoinMiner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                LogPrintf("Bastcoin Miner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            LogPrintf("BastcoinMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("Bastcoin Miner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                 ::GetSerializeSize(*pblock, PROTOCOL_VERSION));
 
             //
@@ -567,7 +585,7 @@ static void BastcoinMiner(const CChainParams& chainparams)
                     {
                         // Found a solution
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                        LogPrintf("BastcoinMiner:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
+                        LogPrintf("Bastcoin Miner:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, chainparams);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
                         coinbaseScript->KeepScript();
@@ -591,7 +609,7 @@ static void BastcoinMiner(const CChainParams& chainparams)
                 // Check for stop or if block needs to be rebuilt
                 boost::this_thread::interruption_point();
                 // Regtest mode doesn't require peers
-                //if (vNodes.empty() && chainparams.MiningRequiresPeers())
+                // if (vNodes.empty() && chainparams.MiningRequiresPeers())
                 //    break;
                 if (pblock->nNonce >= 0xffff0000)
                     break;
@@ -614,31 +632,30 @@ static void BastcoinMiner(const CChainParams& chainparams)
     }
     catch (const boost::thread_interrupted&)
     {
-        LogPrintf("BastcoinMiner -- terminated\n");
+        LogPrintf("Bastcoin Miner -- terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
-        LogPrintf("BastcoinMiner -- runtime error: %s\n", e.what());
+        LogPrintf("Bastcoin Miner -- runtime error: %s\n", e.what());
         return;
     }
-  }
 }
 
 int GenerateBastcoins(bool fGenerate, int nThreads, const CChainParams& chainparams)
 {
 
-    static boost::thread_group* minerThreads = NULL;
+    static boost::thread_group* minerThreads = nullptr;
 
     int numCores = GetNumCores();
     if (nThreads < 0)
         nThreads = numCores;
 
-    if (minerThreads != NULL)
+    if (minerThreads != nullptr)
     {
         minerThreads->interrupt_all();
         delete minerThreads;
-        minerThreads = NULL;
+        minerThreads = nullptr;
     }
 
     if (nThreads == 0 || !fGenerate)
@@ -646,7 +663,7 @@ int GenerateBastcoins(bool fGenerate, int nThreads, const CChainParams& chainpar
 
     minerThreads = new boost::thread_group();
 
-    //Reset metrics
+    // Reset metrics
     nMiningTimeStart = GetTimeMicros();
     nHashesDone = 0;
     nHashesPerSec = 0;
@@ -655,6 +672,6 @@ int GenerateBastcoins(bool fGenerate, int nThreads, const CChainParams& chainpar
         minerThreads->create_thread(boost::bind(&BastcoinMiner, boost::cref(chainparams)));
     }
 
-    return(numCores);
+    return numCores;
 }
 
