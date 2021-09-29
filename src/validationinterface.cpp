@@ -28,6 +28,7 @@ struct ValidationInterfaceConnections {
     boost::signals2::scoped_connection Broadcast;
     boost::signals2::scoped_connection BlockChecked;
     boost::signals2::scoped_connection NewPoWValidBlock;
+    boost::signals2::scoped_connection BlockFound;
 };
 
 struct MainSignalsInstance {
