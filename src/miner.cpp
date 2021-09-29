@@ -6,6 +6,7 @@
 #include <miner.h>
 
 #include <wallet/wallet.h>
+#include <wallet/rpcwallet.h>
 
 #include <boost/thread.hpp>
 
