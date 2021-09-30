@@ -34,7 +34,6 @@
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/blockchain.h>
-#include <rpc/mining.h>
 #include <rpc/util.h>
 #include <script/standard.h>
 #include <script/sigcache.h>
@@ -1270,7 +1269,6 @@ bool AppInitMain(InitInterfaces& interfaces)
 
     InitSignatureCache();
     InitScriptExecutionCache();
-    
 
     LogPrintf("Using %u threads for script verification\n", nScriptCheckThreads);
     if (nScriptCheckThreads) {
