@@ -488,7 +488,7 @@ void static BastcoinMiner(const CChainParams& chainparams)
     unsigned int nExtraNonce = 0;
 
     std::shared_ptr<CWallet> const wallet = GetWallets()[0];
-    CWallet* const pwallet = wallet.get();
+    CWallet* const pWallet = wallet.get();
 
     if (!EnsureWalletIsAvailable(pWallet, false)) {
         LogPrintf("Bastcoin Miner -- Wallet not available\n");
