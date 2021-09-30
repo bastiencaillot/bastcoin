@@ -479,15 +479,6 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-CWallet* GetFirstWallet() {	
-    while (GetWallets() == NULL) {	
-        MilliSleep(100);	
-    }	
-    if (GetWallets() == NULL)	
-        return nullptr;	
-    return GetWallets()[0];	
-}
-
 void static BastcoinMiner(const CChainParams& chainparams)
 {
     LogPrintf("Bastcoin Miner -- started\n");
@@ -496,7 +487,8 @@ void static BastcoinMiner(const CChainParams& chainparams)
 
     unsigned int nExtraNonce = 0;
 
-    CWallet* pWallet = GetFirstWallet();
+    std::shared_ptr<CWallet> const wallet = GetWallets()[0];
+    CWallet* const pwallet = wallet.get();
 
     if (!EnsureWalletIsAvailable(pWallet, false)) {
         LogPrintf("Bastcoin Miner -- Wallet not available\n");
