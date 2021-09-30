@@ -285,7 +285,6 @@ libbitcoin_server_a_SOURCES = \
   validation.cpp \
   validationinterface.cpp \
   versionbits.cpp \
-  wallet/rpcwallet.cpp \
   $(BITCOIN_CORE_H)
 
 if !ENABLE_WALLET
