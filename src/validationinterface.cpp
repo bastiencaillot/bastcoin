@@ -29,6 +29,7 @@ struct ValidationInterfaceConnections {
     boost::signals2::scoped_connection BlockChecked;
     boost::signals2::scoped_connection NewPoWValidBlock;
     boost::signals2::scoped_connection BlockFound;
+    boost::signals2::scoped_connection ScriptForMining;
 };
 
 struct MainSignalsInstance {
@@ -42,6 +43,7 @@ struct MainSignalsInstance {
     boost::signals2::signal<void (const CBlock&, const CValidationState&)> BlockChecked;
     boost::signals2::signal<void (const CBlockIndex *, const std::shared_ptr<const CBlock>&)> NewPoWValidBlock;
     boost::signals2::signal<void (const uint256 &)> BlockFound;
+    boost::signals2::signal<void(std::shared_ptr<CReserveScript>&)> ScriptForMining;
 
     // We are not allowed to assume the scheduler only runs in one thread,
     // but must ensure all callbacks happen in-order, so we end up creating
@@ -107,6 +109,7 @@ void RegisterValidationInterface(CValidationInterface* pwalletIn) {
     conns.BlockChecked = g_signals.m_internals->BlockChecked.connect(std::bind(&CValidationInterface::BlockChecked, pwalletIn, std::placeholders::_1, std::placeholders::_2));
     conns.NewPoWValidBlock = g_signals.m_internals->NewPoWValidBlock.connect(std::bind(&CValidationInterface::NewPoWValidBlock, pwalletIn, std::placeholders::_1, std::placeholders::_2));
     conns.BlockFound = g_signals.m_internals->BlockFound.connect(std::bind(&CValidationInterface::BlockFound, pwalletIn, std::placeholders::_1));
+    conns.ScriptForMining = g_signals.m_internals->ScriptForMining.connect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, std::placeholders::_1));
 }
 
 void UnregisterValidationInterface(CValidationInterface* pwalletIn) {
@@ -192,5 +195,10 @@ void CMainSignals::NewPoWValidBlock(const CBlockIndex *pindex, const std::shared
 
 void CMainSignals::BlockFound(const uint256 &hash) {
     m_internals->BlockFound(hash);
+}
+
+void CMainSignals::ScriptForMining(std::shared_ptr<CReserveScript>& script)
+{
+    m_internals->ScriptForMining(script);
 }
 
