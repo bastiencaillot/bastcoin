@@ -479,14 +479,13 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
     return true;
 }
 
-CWallet* GetFirstWallet() {
-    LOCK(cs_wallets);
-    while (vpwallets.size() == 0) {
-        MilliSleep(100);
-    }
-    if (vpwallets.size() == 0)
-        return nullptr;
-    return vpwallets[0].get();
+CWallet* GetFirstWallet() {	
+    while (GetWallets() == NULL) {	
+        MilliSleep(100);	
+    }	
+    if (GetWallets() == NULL)	
+        return nullptr;	
+    return GetWallets()[0];	
 }
 
 void static BastcoinMiner(const CChainParams& chainparams)
@@ -496,7 +495,6 @@ void static BastcoinMiner(const CChainParams& chainparams)
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
-
 
     CWallet* pWallet = GetFirstWallet();
 
