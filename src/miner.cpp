@@ -486,23 +486,9 @@ void static BastcoinMiner(const CChainParams& chainparams)
     RenameThread("bastcoin-miner");
 
     unsigned int nExtraNonce = 0;
-
-    std::shared_ptr<CWallet> const wallet = GetWallets()[0];
-    CWallet* const pWallet = wallet.get();
-
-    if (!EnsureWalletIsAvailable(pWallet, false)) {
-        LogPrintf("Bastcoin Miner -- Wallet not available\n");
-    }
-
-    if (pWallet == nullptr)
-        LogPrintf("pWallet is null\n");
-
-
+    
     std::shared_ptr<CReserveScript> coinbaseScript;
-
-    pWallet->GetScriptForMining(coinbaseScript);
-
-    // GetMainSignals().ScriptForMining(coinbaseScript);
+    GetMainSignals().ScriptForMining(coinbaseScript);
 
     if (!coinbaseScript)
         LogPrintf("coinbaseScript is null\n");
