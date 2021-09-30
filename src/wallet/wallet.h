@@ -68,9 +68,6 @@ std::vector<std::shared_ptr<CWallet>> GetWallets();
 std::shared_ptr<CWallet> GetWallet(const std::string& name);
 std::shared_ptr<CWallet> LoadWallet(interfaces::Chain& chain, const WalletLocation& location, std::string& error, std::string& warning);
 
-extern CCriticalSection cs_wallets;
-extern std::vector<std::shared_ptr<CWallet>> vpwallets GUARDED_BY(cs_wallets);
-
 //! Default for -keypool
 static const unsigned int DEFAULT_KEYPOOL_SIZE = 1000;
 //! -paytxfee default
