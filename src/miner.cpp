@@ -26,8 +26,6 @@
 #include <util/moneystr.h>
 #include <util/system.h>
 #include <validationinterface.h>
-#include <wallet/wallet.h>
-#include <wallet/rpcwallet.h>
 
 #include <algorithm>
 #include <queue>
