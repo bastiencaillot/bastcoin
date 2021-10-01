@@ -4220,6 +4220,8 @@ static const CRPCCommand commands[] =
 { //  category              name                                actor (function)                argNames
     //  --------------------- ------------------------          -----------------------         ----------
     { "generating",         "generate",                         &generate,                      {"nblocks","maxtries"} },
+    { "generating",         "getgenerate",                      &getgenerate,                   {}},
+    { "generating",         "setgenerate",                      &setgenerate,                   {"generate", "genproclimit"}},
     { "hidden",             "resendwallettransactions",         &resendwallettransactions,      {} },
     { "rawtransactions",    "fundrawtransaction",               &fundrawtransaction,            {"hexstring","options","iswitness"} },
     { "wallet",             "abandontransaction",               &abandontransaction,            {"txid"} },
