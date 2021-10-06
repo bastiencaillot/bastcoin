@@ -3798,7 +3798,10 @@ UniValue setgenerate(const JSONRPCRequest& request)
             "\nTurn off generation\n" + HelpExampleCli("setgenerate", "false") +
             "\nUsing json rpc\n" + HelpExampleRpc("setgenerate", "true, 1"));
     }
-
+    
+    if (Params().MineBlocksOnDemand())
+        throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Use the generate method instead of setgenerate on the regtest network");
+    
     bool fGenerate = true;
     if (!request.params[0].isNull())
         fGenerate = request.params[0].get_bool();
@@ -3814,7 +3817,7 @@ UniValue setgenerate(const JSONRPCRequest& request)
     gArgs.ForceSetArg("-genproclimit", itostr(nGenProcLimit));
     GenerateBastcoins(fGenerate, nGenProcLimit, Params());
 
-    return NullUniValue;
+    return NullUniValue;   
 }
 
 
