@@ -479,10 +479,11 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 
 void static BastcoinMiner(const CChainParams& chainparams)
 {
+        
     LogPrintf("Bastcoin Miner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("bastcoin-miner");
-
+        
     unsigned int nExtraNonce = 0;
     
     std::shared_ptr<CReserveScript> coinbaseScript;
@@ -505,18 +506,6 @@ void static BastcoinMiner(const CChainParams& chainparams)
 
 
         while (true) {
-
-            if (chainparams.MiningRequiresPeers()) {
-                // Busy-wait for the network to come online so we don't waste time mining
-                // on an obsolete chain. In regtest mode we expect to fly solo.
-                do {
-                    if ((g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL) > 0) && !IsInitialBlockDownload()) {
-                        break;
-                    }
-
-                    MilliSleep(1000);
-                } while (true);
-            }
 
 
             //
