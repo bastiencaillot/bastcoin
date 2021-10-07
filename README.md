@@ -36,7 +36,7 @@ Thanks to the 5 Github repositories without which the Bastcoin would never have 
 
 Indeed Verge is multi-algorithm, and uses Blake2s (the predecessor of Blake3)
 
--https://github.com/RavenProject/Ravencoin for the built-in CPU miner
+-https://github.com/RavenProject/Ravencoin for the built-in CPU miner, as well as https://github.com/bitcoincloudcore/BitcoinCloud
 
 ## License 📝
 
