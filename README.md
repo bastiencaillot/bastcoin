@@ -45,10 +45,9 @@ information or see https://opensource.org/licenses/MIT.
 
 ## Get bastcoin
 
-If you want to get Bastcoin Core, you have to build it in your operating system.
-You must go to the doc folder and find the markdown corresponding to your platform
-This page will be republished when you can download it from the website.
-Thank you for your understanding
+If you want to get Bastcoin Core, you can build it in your operating system.
+
+The releases are now available ;) https://github.com/bastiencaillot/bastcoin/releases/tag/v0.18
 
 -------------------------------------------------
 
