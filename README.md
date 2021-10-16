@@ -24,7 +24,7 @@ You can also find [blake3.pdf](blake3.pdf)
 
 ## acknowledgements 👏
 
-Thanks to the 5 Github repositories without which the Bastcoin would never have existed:
+Thanks to the 6 Github repositories without which the Bastcoin would never have existed:
 
 -https://github.com/bitcoin/bitcoin (the king, Satoshi Nakamoto I love you)
 
