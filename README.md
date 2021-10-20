@@ -10,19 +10,15 @@ Mail 📧 // bastcoin@bastcoin.org
 
 The bastcoin is a cryptocurrency that has as its main source the bitcoin, but there are several differences between these two cryptocurrencies, including:
 
--The hash algorithm is not Sha256d but Blake3, I invite you to look below at the README.md of Blake3 or go to the following url: https://github.com/BLAKE3-team/BLAKE3
-As you can see in this [picture](20210724_192028[1].jpg) , I did not find any cryptocurrency on Coinmarketcap having blake3 for algorithm.
-You can also find [blake3.pdf](blake3.pdf)
+-The hash algorithm is not Sha256d but Blake3, I invite you to look below at the README.md of Blake3 or go to the following url: https://github.com/BLAKE3-team/BLAKE3 As you can see in this picture , I did not find any cryptocurrency on Coinmarketcap having blake3 for algorithm. You can also find blake3.pdf
 
 -maximum number of coins in circulation is 7,000,000 and not 21,000,000 as bitcoin
 
--the initial reward per block remains 50 coins, and is therefore halved every 70000 blocks
+-the target duration of proof of work per block is not 10 minutes but 4 minutes (however the initial reward per block remains 50 coins, and is therefore halved every 70000 blocks)
 
 -difficulty is recalculated every 700 blocks
 
--and lots of other things I probably forgot ;)
-
-EDIT:Following an error of powlimit in test version, I decided to modify the genesis block and to increase the difficulty and consequently to decrease (to 2.5 minutes) the target duration between 2 consecutive blocks  
+-and lots of other things I probably forgot ;) 
 
 ## acknowledgements 👏
 
