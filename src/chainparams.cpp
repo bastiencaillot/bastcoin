@@ -51,7 +51,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "CNBC Sep 08 2021 Most expensive home in America defaults on $165 million in debt, heads for sale";
+    const char* pszTimestamp = "CNBC Oct 20 2021 SpaceX expected to become more valuable than Tesla, Morgan Stanley survey finds";
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -69,9 +69,9 @@ public:
         //consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8"); not now ;)
         consensus.BIP65Height = 15930; 
         consensus.BIP66Height = 16964;
-        consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 700 * 4 * 60; // 2800 minutes
-        consensus.nPowTargetSpacing = 4 * 60;
+        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.nPowTargetTimespan = 700 * 2.5 * 60; // 1750 minutes
+        consensus.nPowTargetSpacing = 2.5 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 665; // 95% of 700
@@ -111,10 +111,10 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1631131637, 714734, 0x1e0ffff0, 1, 50 * COIN); 
+        genesis = CreateGenesisBlock(1634753057, 1032533, 0x1e0ffff0, 1, 50 * COIN); 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000e01a13ff1dde32c6355b5dce6f374db531896896af4aa2eb4398ce1622d")); 
-        assert(genesis.hashMerkleRoot == uint256S("0x757cbc59246fc8056ecdfbb78907eac2b08f6fc2cba5b930cc371bb85af311d0"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000006e00e757cfb323c99392bdadf2ae62ef12eae56a56d370f979f66d8cf53")); 
+        assert(genesis.hashMerkleRoot == uint256S("0x7df824326368dff26b3fa48a9bd884b56fd6862f5aee3dfe7542066a257ca343"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -144,14 +144,14 @@ public:
 
         checkpointData = {
             {
-               { 0, uint256S("0x00000e01a13ff1dde32c6355b5dce6f374db531896896af4aa2eb4398ce1622d")},
+               { 0, uint256S("0x000006e00e757cfb323c99392bdadf2ae62ef12eae56a56d370f979f66d8cf53")},
               
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: genesis block
-            /* nTime    */ 1631131637,
+            /* nTime    */ 1634753057,
             /* nTxCount */ 0,
             /* dTxRate  */ 0
         };
@@ -174,9 +174,9 @@ public:
         //consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8"); not now ;)
         consensus.BIP65Height = 581885; 
         consensus.BIP66Height = 330776; 
-        consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 700* 4 * 60; // two weeks
-        consensus.nPowTargetSpacing = 4 * 60;
+        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.nPowTargetTimespan = 700 * 2.5 * 60; // 1750 minutes
+        consensus.nPowTargetSpacing = 2.5 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 525; // 75% for testchains
@@ -210,10 +210,10 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1631131817, 257180, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1634753395, 827449, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000cdf500876afbf8a4bd6884eab49f894d54e8685081fa5640b38d2203103"));
-        assert(genesis.hashMerkleRoot == uint256S("0x757cbc59246fc8056ecdfbb78907eac2b08f6fc2cba5b930cc371bb85af311d0"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000dde7c1aabfeb06cddb5927e2367ba1404d2bb72a3e200b0ccb27d429746"));
+        assert(genesis.hashMerkleRoot == uint256S("0x7df824326368dff26b3fa48a9bd884b56fd6862f5aee3dfe7542066a257ca343"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -237,13 +237,13 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("00000cdf500876afbf8a4bd6884eab49f894d54e8685081fa5640b38d2203103")},
+                {0, uint256S("00000dde7c1aabfeb06cddb5927e2367ba1404d2bb72a3e200b0ccb27d429746")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data from rpc: genesis block
-            /* nTime    */ 1631131817,
+            /* nTime    */ 1634753395,
             /* nTxCount */ 0,
             /* dTxRate  */ 0
         };
@@ -300,10 +300,10 @@ public:
 
         UpdateVersionBitsParametersFromArgs(args);
 
-        genesis = CreateGenesisBlock(1631131933, 1958951, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1634753490, 1366422, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000064a2a7fb7fef2334004558b7f01873b38b876c91ea46c797083e80c9aa0"));
-        assert(genesis.hashMerkleRoot == uint256S("0x757cbc59246fc8056ecdfbb78907eac2b08f6fc2cba5b930cc371bb85af311d0"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000099a1feb59a9cd849168716617d35218ba600113f34a3f8c72dc3776af89"));
+        assert(genesis.hashMerkleRoot == uint256S("0x7df824326368dff26b3fa48a9bd884b56fd6862f5aee3dfe7542066a257ca343"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -314,7 +314,7 @@ public:
 
         checkpointData = {
             {
-                {0, uint256S("0000064a2a7fb7fef2334004558b7f01873b38b876c91ea46c797083e80c9aa0")},
+                {0, uint256S("0000099a1feb59a9cd849168716617d35218ba600113f34a3f8c72dc3776af89")},
             }
         };
 
