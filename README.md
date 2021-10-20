@@ -18,11 +18,11 @@ You can also find [blake3.pdf](blake3.pdf)
 
 -the initial reward per block remains 50 coins, and is therefore halved every 70000 blocks
 
--difficulty is recalculated every 100 blocks
+-difficulty is recalculated every 700 blocks
 
 -and lots of other things I probably forgot ;)
 
-EDIT:Following an error of powlimit in test version, I decided to modify the genesis block and to increase the difficulty and consequently to decrease (to 100 seconds) the target duration between 2 consecutive blocks  
+EDIT:Following an error of powlimit in test version, I decided to modify the genesis block and to increase the difficulty and consequently to decrease (to 2.5 minutes) the target duration between 2 consecutive blocks  
 
 ## acknowledgements 👏
 
