@@ -18,7 +18,7 @@ You can also find [blake3.pdf](blake3.pdf)
 
 -the initial reward per block remains 50 coins, and is therefore halved every 70000 blocks
 
--difficulty is recalculated every 70 blocks
+-difficulty is recalculated every 100 blocks
 
 -and lots of other things I probably forgot ;)
 
